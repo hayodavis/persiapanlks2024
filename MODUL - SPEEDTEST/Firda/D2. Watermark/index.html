@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watermark Image</title>
+    <style>
+      #container {
+        position: relative;
+        display: inline-block;
+      }
+
+      #image,
+      #watermark {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      #watermark {
+        position: absolute;
+        top: 10px; 
+        right: 10px; 
+        opacity: 0.5; 
+        pointer-events: none; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <img id="image" src="beach.jpg" alt="Original Image" />
+      <img id="watermark" src="logo.png" alt="Watermark Logo" />
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var image = document.getElementById("image");
+        image.src = "beach.jpg"; 
+        var watermark = document.getElementById("watermark");
+        watermark.src = "logo.png"; 
+      });
+    </script>
+  </body>
+</html>

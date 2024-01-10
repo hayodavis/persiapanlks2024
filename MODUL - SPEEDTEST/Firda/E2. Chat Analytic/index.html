@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message Analytics</title>
+    <style>
+      /* Add your CSS styles here */
+    </style>
+  </head>
+  <body>
+    <h1>Message Analytics</h1>
+
+    <input
+      type="file"
+      accept=".json"
+      id="jsonFileInput"
+      onchange="handleFileUpload()"
+    />
+    <div id="analyticsResults"></div>
+
+    <script>
+      function handleFileUpload() {
+        const fileInput = document.getElementById("jsonFileInput");
+        const analyticsResultsDiv = document.getElementById("analyticsResults");
+
+        const file = fileInput.files[0];
+        if (!file) {
+          analyticsResultsDiv.innerHTML = "Please select a valid JSON file.";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const jsonData = JSON.parse(e.target.result);
+
+          const sentMessages = jsonData.messages.filter(
+            (message) => message.type === "sent"
+          );
+          const receivedMessages = jsonData.messages.filter(
+            (message) => message.type === "received"
+          );
+
+          const top5SentWords = getTopWords(sentMessages, 5);
+          const totalMessagesSent = sentMessages.length;
+          const totalMessagesReceived = receivedMessages.length;
+          const avgCharLengthSent = calculateAverageCharLength(sentMessages);
+          const avgCharLengthReceived =
+            calculateAverageCharLength(receivedMessages);
+
+          // Display results
+          analyticsResultsDiv.innerHTML = `
+        <p>Top 5 sent words: ${top5SentWords}</p>
+        <p>Total messages sent: ${totalMessagesSent}</p>
+        <p>Total messages received: ${totalMessagesReceived}</p>
+        <p>Average character length sent: ${avgCharLengthSent}</p>
+        <p>Average character length received: ${avgCharLengthReceived}</p>
+      `;
+        };
+
+        reader.readAsText(file);
+      }
+
+      function getTopWords(messages, n) {
+        const words = messages
+          .map((message) => (message.text ? message.text.split(/\s+/) : []))
+          .flat();
+        const wordCounts = {};
+
+        words.forEach((word) => {
+          wordCounts[word] = (wordCounts[word] || 0) + 1;
+        });
+
+        const sortedWords = Object.entries(wordCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, n);
+
+        return sortedWords
+          .map(([word, count]) => `${word}(${count}x)`)
+          .join(", ");
+      }
+
+      function calculateAverageCharLength(messages) {
+        const totalCharLength = messages.reduce(
+          (acc, message) => acc + message.text.length,
+          0
+        );
+        return messages.length > 0
+          ? Math.round(totalCharLength / messages.length)
+          : 0;
+      }
+    </script>
+  </body>
+</html>

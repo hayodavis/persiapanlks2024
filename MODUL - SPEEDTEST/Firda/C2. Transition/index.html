@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition</title>
+    <style>
+      #imageGrid {
+        display: grid;
+        gap: 5px;
+        padding-top: 25px;
+      }
+
+      .grid-item {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="rows">Y:</label>
+    <input type="number" id="rows" min="1" />
+    <label for="columns">X:</label>
+    <input type="number" id="columns" min="1" />
+    <button onclick="generateImageGrid()">Split Image</button>
+
+    <div id="imageGrid"></div>
+
+    <script>
+      function generateImageGrid() {
+
+        var rows = document.getElementById("rows").value;
+        var columns = document.getElementById("columns").value;
+
+        var image = new Image();
+        image.src = "bear.jpg";
+        image.onload = function () {
+
+          var imageGrid = splitImage(image, rows, columns);
+
+          var gridContainer = document.getElementById("imageGrid");
+          gridContainer.innerHTML = ""; 
+          gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+          gridContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+          imageGrid.forEach(function (imgPart) {
+            imgPart.classList.add("grid-item");
+            gridContainer.appendChild(imgPart);
+          });
+        };
+      }
+
+      function splitImage(image, rows, columns) {
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+
+        var imgWidth = image.width / columns;
+        var imgHeight = image.height / rows;
+
+        var imageGrid = [];
+
+        for (var row = 0; row < rows; row++) {
+          for (var col = 0; col < columns; col++) {
+            canvas.width = imgWidth;
+            canvas.height = imgHeight;
+
+            context.drawImage(
+              image,
+              col * imgWidth,
+              row * imgHeight,
+              imgWidth,
+              imgHeight,
+              0,
+              0,
+              imgWidth,
+              imgHeight
+            );
+
+            var imgPart = new Image();
+            imgPart.src = canvas.toDataURL("image/png"); 
+            imageGrid.push(imgPart);
+          }
+        }
+
+        return imageGrid;
+      }
+    </script>
+  </body>
+</html>
