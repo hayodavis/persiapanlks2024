@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      canvas {
+        display: block;
+        background-color: green;
+      }
+    </style>
+    <title>Canvas Animation</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="400" height="320"></canvas>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+      const containerWidth = canvas.width;
+      const containerHeight = canvas.height;
+      const circleRadius = 20;
+      let circleX = circleRadius;
+
+      function drawCircle() {
+        ctx.clearRect(0, 0, containerWidth, containerHeight);
+        ctx.beginPath();
+        ctx.arc(circleX, containerHeight / 2, circleRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function animateCircle() {
+        drawCircle();
+        circleX += 2; // Adjust the speed of the animation
+
+        if (circleX > containerWidth + circleRadius) {
+          circleX = -circleRadius; // Reset position when it goes beyond the right edge
+        }
+
+        requestAnimationFrame(animateCircle);
+      }
+
+      animateCircle();
+    </script>
+  </body>
+</html>
