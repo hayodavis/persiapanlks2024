@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #timer {
+      font-size: 5em;
+      margin-right: 10px;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    #btnStart {
+        background-color: blue;
+        color: white;
+        border-width: 0;
+    }
+    #btnStop {
+        background-color: red;
+        color: white;
+        border-width: 0;
+    }
+    #btnReset {
+        background-color: yellow;
+        border-width: 0;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <button id="btnStart" onclick="startTimer()">Start Timer</button>
+    <button id="btnStop" onclick="stopTimer()">Stop Timer</button>
+    <button id="btnReset" onclick="resetTimer()">Reset Timer</button>
+</div>
+<span id="timer">000.00</span>
+
+  <script>
+    let timer;
+    let milliseconds = 0;
+    let isRunning = false;
+
+    function updateTimer() {
+      const seconds = Math.floor(milliseconds / 1000);
+      const centiseconds = Math.floor((milliseconds % 1000) / 10);
+      document.getElementById('timer').innerText = `${String(seconds).padStart(3, '0')}.${String(centiseconds).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (!isRunning) {
+        isRunning = true;
+        timer = setInterval(() => {
+          milliseconds += 10;
+          updateTimer();
+        }, 10);
+      }
+    }
+
+    function stopTimer() {
+      if (isRunning) {
+        isRunning = false;
+        clearInterval(timer);
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      milliseconds = 0;
+      updateTimer();
+    }
+  </script>
+</body>
+</html>
