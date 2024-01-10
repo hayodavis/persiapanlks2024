@@ -1,0 +1,115 @@
+body {
+  background-color: rgb(63, 56, 56);
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.box {
+  width: 360px;
+  height: 640px;
+  background-color: white;
+  margin: auto;
+  border-radius: 30px;
+  position: relative;
+}
+.avatar {
+  background-color: antiquewhite;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
+header.satu {
+  width: 100%;
+  height: 120px;
+  background-color: #7000ff;
+  border-radius: 30px 30px 0px 0px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+header h3 {
+  color: white;
+}
+.text h3,
+.text p {
+  margin: 0px;
+}
+.message-preview {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
+.avatar-text {
+  width: 50px;
+  height: 50px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+  margin: 20px;
+}
+.pesanbaru {
+  border-radius: 50%;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 18px;
+  background-color: #7000ff;
+  width: 50px;
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header.dua {
+  width: 100%;
+  height: 80px;
+  background-color: #7000ff;
+  display: flex;
+  border-radius: 30px 30px 0px 0px;
+  align-items: center;
+  position: relative;
+}
+h4 {
+  color: white;
+}
+
+section.pesan {
+  margin: 10px;
+  position: relative;
+}
+p.chat-penerima {
+  text-align: left;
+  background-color: lightgray;
+  padding: 10px;
+  width: max-content;
+}
+p.chat-pengirim {
+  text-align: right;
+  padding: 10px;
+  background-color: rgb(82, 255, 47);
+  width: max-content;
+}
+.tempat-chat {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  margin: 10px;
+  gap: 5px;
+  justify-content: space-between;
+}
+input.kirimpesan {
+  padding: 10px;
+  border-radius: 30px;
+  width: 270px;
+}
+.pesan-suara {
+  width: 40px;
+  height: 40px;
+  background-color: #7000ff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
