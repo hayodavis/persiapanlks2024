@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #timer {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #buttons {
+            display: flex;
+            gap: 10px;
+            border: none;
+        }
+
+        .start {
+            background-color: blue;
+            color: aliceblue;
+        }
+        .stop {
+            background-color: red;
+            color: aliceblue;
+        }
+        .reset {
+            background-color: yellow;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="timer">000:00</div>
+
+    <div id="buttons">
+        <button class="start" onclick="startTimer()">Start Timer</button>
+        <button class="stop" onclick="stopTimer()">Stop Timer</button>
+        <button class="reset" onclick="resetTimer()">Reset Timer</button>
+    </div>
+
+    <script>
+        let timerInterval;
+        let centiseconds = 0;
+        let seconds = 0;
+        let minutes = 0;
+
+        function updateTimer() {
+            centiseconds++;
+            if (centiseconds === 100) {
+                centiseconds = 0;
+                seconds++;
+                if (seconds === 60) {
+                    seconds = 0;
+                    minutes++;
+                    if (minutes === 1000) {
+                        // Max timer value reached
+                        stopTimer();
+                        alert("Max timer value reached (999:59)");
+                    }
+                }
+            }
+
+            const formattedTime = `${padNumber(minutes)}:${padNumber(seconds)}:${padNumber(centiseconds)}`;
+            document.getElementById('timer').textContent = formattedTime;
+        }
+
+        function startTimer() {
+            if (!timerInterval) {
+                timerInterval = setInterval(updateTimer, 10);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            centiseconds = 0;
+            seconds = 0;
+            minutes = 0;
+            document.getElementById('timer').textContent = '000:00';
+        }
+
+        function padNumber(num) {
+            return num.toString().padStart(2, '0');
+        }
+    </script>
+
+</body>
+
+</html>
