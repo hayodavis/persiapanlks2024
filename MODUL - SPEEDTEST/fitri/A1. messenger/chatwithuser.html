@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>messenger-chat</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+      }
+      #myCanvas {
+        border: 1px solid #000000;
+        border-radius: 5%;
+        width: 360px;
+        height: 640px;
+        margin-top: 10px;
+        position: relative;
+      }
+      .topchat {
+        width: 360px;
+        height: 110px;
+        background-color: #503c3c;
+        position: absolute;
+        left: 579px;
+        top: 11px;
+        border-radius: 20px 20px 0px 0px;
+      }
+      .avatar {
+        width: 80px;
+        height: 80px;
+        background-color: #a87c7c;
+        border-radius: 50%;
+        position: absolute;
+        left: 600px;
+        top: 25px;
+      }
+      .fullname {
+        position: absolute;
+        left: 700px;
+        top: 55px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .dot1 {
+        left: 880px;
+        position: absolute;
+        top: 5px;
+        color: white;
+        font-size: 60px;
+      }
+      .dot2 {
+        left: 880px;
+        position: absolute;
+        top: 15px;
+        color: white;
+        font-size: 60px;
+      }
+      .dot3 {
+        left: 880px;
+        position: absolute;
+        top: 25px;
+        color: white;
+        font-size: 60px;
+      }
+      .bbc1 {
+        width: 280px;
+        height: 40px;
+        background-color: #7e6363;
+        position: absolute;
+        left: 600px;
+        top: 140px;
+        border-radius: 10px;
+        font-size: 19px;
+        text-align: center;
+        padding-top: 15px;
+        margin-bottom: 10px;
+      }
+      .bbc2 {
+        width: 260px;
+        height: 40px;
+        background-color: #a87c7c;
+        position: absolute;
+        left: 660px;
+        top: 240px;
+        border-radius: 10px;
+        font-size: 19px;
+        text-align: center;
+        padding-top: 15px;
+      }
+      .bbc3 {
+        width: 80px;
+        height: 40px;
+        background-color: #7e6363;
+        position: absolute;
+        left: 600px;
+        top: 340px;
+        border-radius: 10px;
+        font-size: 19px;
+        text-align: center;
+        padding-top: 15px;
+      }
+      .typechat {
+        width: 350px;
+        height: 40px;
+        background-color: #7e6363;
+        position: absolute;
+        left: 579px;
+        top: 594px;
+        bottom: 10px;
+        border-radius: 0px 0px 20px 20px;
+        font-size: 22px;
+        padding-top: 15px;
+        color: white;
+      }
+      .buttnsend {
+        width: 80px;
+        height: 41px;
+        background-color: #c2acac;
+        position: absolute;
+        top: 595px;
+        left: 858px;
+        border-radius: 0px 0px 20px 0px;
+        font-size: 19px;
+        text-align: center;
+        padding-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="360" height="640"></canvas>
+    <div class="topchat"></div>
+    <div class="avatar"></div>
+    <div class="fullname">Gerrard Eiden</div>
+    <div class="dot1">.</div>
+    <div class="dot2">.</div>
+    <div class="dot3">.</div>
+    <div class="bbc1">Good Morning, have a nice day!</div>
+    <div class="bbc2">morning too gurl,yeah u too</div>
+    <div class="bbc3">okay</div>
+    <input type="text" class="typechat" placeholder="Type chat..." />
+    <div class="buttnsend">send</div>
+  </body>
+</html>
