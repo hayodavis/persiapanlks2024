@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     canvas {
-      border: 1px solid #000;
       display: block;
       margin: 20px auto;
+      background-color: green;
     }
   </style>
 </head>
@@ -25,9 +25,8 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.arc(x, canvas.height / 2, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = '#3498db';
+      ctx.fillStyle = 'white';
       ctx.fill();
-      ctx.stroke();
 
       // Move the circle to the right
       x += 2;
