@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Timer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+      }
+      #timer {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      button {
+        font-size: 1em;
+        margin: 5px;
+        padding: 10px;
+        cursor: pointer;
+      }
+      button:nth-child(1) {
+        background-color: blue;
+        color: white;
+      }
+      button:nth-child(2) {
+        background-color: red;
+        color: white;
+      }
+      button:nth-child(3) {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tombol">
+      <button onclick="startTimer()">Start Timer</button>
+      <button onclick="stopTimer()">Stop Timer</button>
+      <button onclick="resetTimer()">Reset Timer</button>
+    </div>
+
+    <div id="timer">000:00</div>
+    <script>
+      let interval;
+      let centiseconds = 0;
+      let seconds = 0;
+      let minutes = 0;
+
+      function updateTimer() {
+        centiseconds++;
+        if (centiseconds === 100) {
+          centiseconds = 0;
+          seconds++;
+          if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes === 1000) {
+              // Max value reached
+              stopTimer();
+              return;
+            }
+          }
+        }
+
+        const formattedCentiseconds =
+          centiseconds < 10 ? `0${centiseconds}` : centiseconds;
+        const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+        const formattedMinutes =
+          minutes < 10
+            ? `00${minutes}`
+            : minutes < 100
+            ? `0${minutes}`
+            : minutes;
+
+        document.getElementById(
+          "timer"
+        ).innerText = `${formattedMinutes}:${formattedSeconds}:${formattedCentiseconds}`;
+      }
+
+      function startTimer() {
+        interval = setInterval(updateTimer, 10);
+      }
+
+      function stopTimer() {
+        clearInterval(interval);
+      }
+
+      function resetTimer() {
+        stopTimer();
+        centiseconds = 0;
+        seconds = 0;
+        minutes = 0;
+        updateTimer();
+      }
+    </script>
+  </body>
+</html>
