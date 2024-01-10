@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+    nav {
+            background-color: #444;
+            padding: 10px;
+            display: flex;
+        }
+
+     nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        nav a:hover{
+            color: rgb(205, 200, 50);
+        }
+
+        .cta {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* dropdown */
+        .dropdown{
+            display: inline-block;
+            padding-top: 10px;
+        }
+
+        .content{
+            display: none;
+            position: absolute;
+            margin-top: 10px;
+            background-color: #4407bf;
+        }
+        .dropdown:hover .content {
+            display: block;
+        }
+
+
+</style>
+<body>
+    <header>
+        <img src="image/20231003_075947.png" width="100px" height="100px">
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <div class="dropdown">
+        <a href="">Menu</a>
+        <div class="content">
+            <a href="#">Menu 1</a>
+            <a href="#">Menu 2</a>
+            <a href="#">Menu 3</a>
+        </div>
+    </div>
+    </nav>
+
+    <div class="hero">
+        <h1>HERO</h1>
+    </div>
+
+    <div class="cta">
+        <p>jangan lupa subscribe</p>
+        <a href="">Klik disini</a>
+    </div>
+
+</body>
+</html>

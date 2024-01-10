@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger App - Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .messages {
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 450px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .text-field {
+            width: 70%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .send-btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+<canvas id="c" width="360" height="640"></canvas>
+    <header>
+        <h1>Messenger App</h1>
+    </header>
+
+    <div class="chat-header">
+        <div>
+            <img src="image/avatar 1.png" alt="Avatar 1" class="avatar">
+            <h2>Full Name 1</h2>
+        </div>
+        <div class="menu-icon">&#8942;</div>
+    </div>
+
+    <div class="messages">
+        <div class="message">
+            <strong>Full Name 1:</strong> Hi there!
+        </div>
+        <div class="message">
+            <strong>You:</strong> Hello!
+        </div>
+        <!-- Add more messages as needed -->
+    </div>
+
+    <div>
+        <input type="text" class="text-field" placeholder="Type your message...">
+        <button class="send-btn">Send</button>
+    </div>
+</body>
+</html>
