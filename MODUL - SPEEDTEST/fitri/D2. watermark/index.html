@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermark App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        #outputImage {
+            margin-top: 20px;
+            max-width: 100%;
+            max-height: 400px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .customfileinpt1 {
+            width: 120px;
+            height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            top: 0px;
+        }
+        .customfileinpt2 {
+            width: 120px;
+            height: 30px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Watermark App</h2>
+   <!-- Custom-styled label for image input -->
+   <label for="imageInput" class="customfileinpt1">Choose Image</label> <br>
+   <input type="file" id="imageInput" accept="image/*" /> <br>
+
+   <!-- Custom-styled label for logo input -->
+   <label for="logoInput" class="customfileinpt2">Choose Logo</label><br>
+   <input type="file" id="logoInput" accept="image/png" /><br>
+
+
+
+    <button onclick="addWatermark()">Add Watermark</button>
+    <img id="outputImage" src="gudetamawtrmrk.png" alt="Watermarked Image">
+    <script>
+        function addWatermark() {
+            var imageInput = document.getElementById('imageInput');
+            var logoInput = document.getElementById('logoInput');
+            var outputImage = document.getElementById('outputImage');
+
+            if (imageInput.files.length === 0 || logoInput.files.length === 0) {
+                alert('Please select both image and logo files.');
+                return;
+            }
+
+            var imageFile = imageInput.files[0];
+            var logoFile = logoInput.files[0];
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var image = new Image();
+                image.src = e.target.result;
+
+                image.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0);
+
+                    var logo = new Image();
+                    logo.src = URL.createObjectURL(logoFile);
+
+                    logo.onload = function () {
+                        var watermarkPositionX = canvas.width - logo.width - 10;
+                        var watermarkPositionY = 10;
+
+                        ctx.drawImage(logo, watermarkPositionX, watermarkPositionY);
+
+                        outputImage.src = canvas.toDataURL();
+                    };
+                };
+            };
+
+            reader.readAsDataURL(imageFile);
+        }
+    </script>
+</body>
+</html>

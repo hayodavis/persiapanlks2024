@@ -17,8 +17,13 @@
         }
 
         #timer {
-            font-size: 2em;
+            font-size: 3em;
             margin-bottom: 20px;
+            border: 1px solid black;
+            width: 4em;
+            height: 60px;
+            text-align: center;
+            margin-top: 30px;
         }
 
         #buttons {
@@ -30,13 +35,22 @@
         .start {
             background-color: blue;
             color: aliceblue;
+            width: 90px;
+            height: 60px;
+            font-size: 15px ;
         }
         .stop {
             background-color: red;
             color: aliceblue;
+            width: 90px;
+            height: 60px;
+            font-size: 15px ;
         }
         .reset {
             background-color: yellow;
+            width: 100px;
+            height: 60px;
+            font-size: 15px ;
         }
 
     </style>
@@ -44,64 +58,60 @@
 
 <body>
 
-    <div id="timer">000:00</div>
-
     <div id="buttons">
         <button class="start" onclick="startTimer()">Start Timer</button>
         <button class="stop" onclick="stopTimer()">Stop Timer</button>
         <button class="reset" onclick="resetTimer()">Reset Timer</button>
     </div>
 
+    <div id="timer">000:00</div>
+
+
     <script>
-        let timerInterval;
-        let centiseconds = 0;
-        let seconds = 0;
-        let minutes = 0;
+       let timerInterval;
+      let centiseconds = 0;
+      let seconds = 0;
 
-        function updateTimer() {
-            centiseconds++;
-            if (centiseconds === 100) {
-                centiseconds = 0;
-                seconds++;
-                if (seconds === 60) {
-                    seconds = 0;
-                    minutes++;
-                    if (minutes === 1000) {
-                        // Max timer value reached
-                        stopTimer();
-                        alert("Max timer value reached (999:59)");
-                    }
-                }
-            }
+      function startTimer() {
+        if (!timerInterval) {
+          timerInterval = setInterval(updateTimer, 10);
+        }
+      }
 
-            const formattedTime = `${padNumber(minutes)}:${padNumber(seconds)}:${padNumber(centiseconds)}`;
-            document.getElementById('timer').textContent = formattedTime;
+      function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+
+      function resetTimer() {
+        stopTimer();
+        centiseconds = 0;
+        seconds = 0;
+        updateTimerDisplay();
+      }
+
+      function updateTimer() {
+        centiseconds++;
+
+        if (centiseconds === 100) {
+          centiseconds = 0;
+          seconds++;
+
+          if (seconds === 600) {
+            resetTimer();
+          }
         }
 
-        function startTimer() {
-            if (!timerInterval) {
-                timerInterval = setInterval(updateTimer, 10);
-            }
-        }
+        updateTimerDisplay();
+      }
 
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-        }
-
-        function resetTimer() {
-            stopTimer();
-            centiseconds = 0;
-            seconds = 0;
-            minutes = 0;
-            document.getElementById('timer').textContent = '000:00';
-        }
-
-        function padNumber(num) {
-            return num.toString().padStart(2, '0');
-        }
+      function updateTimerDisplay() {
+        const formattedSeconds = seconds.toString().padStart(3, "0");
+        const formattedCentiseconds = centiseconds.toString().padStart(2, "0");
+        document.getElementById(
+          "timer"
+        ).textContent = `${formattedSeconds}:${formattedCentiseconds}`;
+      }
     </script>
-
-</body>
-
+  </body>
 </html>

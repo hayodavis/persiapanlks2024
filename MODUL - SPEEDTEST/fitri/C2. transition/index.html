@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Splitter</title>
+    <style>
+      #imageGrid {
+        display: grid;
+        gap: 5px;
+        padding-top: 10px;
+      }
+
+      .grid-item {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: opacity 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="columns">X:</label>
+    <input type="number" id="columns" min="1" />
+    <label for="rows">Y:</label>
+    <input type="number" id="rows" min="1" />
+    <button onclick="generateImageGrid()">Split Image</button>
+
+    <div id="imageGrid"></div>
+
+    <script>
+      function generateImageGrid() {
+        var rows = parseInt(document.getElementById("rows").value);
+        var columns = parseInt(document.getElementById("columns").value);
+
+        var image = new Image();
+        image.src = "guydetama.png";
+        image.onload = function () {
+          var imageGrid = splitImage(image, rows, columns);
+
+          var gridContainer = document.getElementById("imageGrid");
+          gridContainer.innerHTML = "";
+          gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+          gridContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+          imageGrid.forEach(function (imgPart, index) {
+            var gridItem = document.createElement("div");
+            gridItem.classList.add("grid-item");
+            gridItem.appendChild(imgPart);
+            gridItem.addEventListener("click", function () {
+              animateAndRemove(gridItem);
+            });
+            gridContainer.appendChild(gridItem);
+          });
+        };
+      }
+
+      function splitImage(image, rows, columns) {
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+
+        var imgWidth = image.width / columns;
+        var imgHeight = image.height / rows;
+
+        var imageGrid = [];
+
+        for (var row = 0; row < rows; row++) {
+          for (var col = 0; col < columns; col++) {
+            canvas.width = imgWidth;
+            canvas.height = imgHeight;
+
+            context.drawImage(
+              image,
+              col * imgWidth,
+              row * imgHeight,
+              imgWidth,
+              imgHeight,
+              0,
+              0,
+              imgWidth,
+              imgHeight
+            );
+
+            var imgPart = new Image();
+            imgPart.src = canvas.toDataURL();
+            imageGrid.push(imgPart);
+          }
+        }
+
+        return imageGrid;
+      }
+
+      function animateAndRemove(element) {
+        element.style.opacity = 0;
+        setTimeout(function () {
+          element.remove();
+        }, 500);
+      }
+    </script>
+  </body>
+</html>

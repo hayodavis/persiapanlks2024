@@ -1,0 +1,13 @@
+{
+    "messages": [
+      { "type": "sent", "content": "Hello there!" },
+      { "type": "received", "content": "Hi! How are you?" },
+      { "type": "sent", "content": "I'm doing well, thanks!" },
+      { "type": "received", "content": "That's great to hear." },
+      { "type": "sent", "content": "Do you want to grab lunch later?" },
+      { "type": "received", "content": "Sure, I'd love to!" },
+      { "type": "sent", "content": "Awesome! Let's meet at the usual place." },
+      { "type": "received", "content": "Sounds good. See you there!" }
+    ]
+  }
+  
