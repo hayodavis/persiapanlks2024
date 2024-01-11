@@ -6,78 +6,91 @@
     <title>Image Splitter</title>
     <style>
       body {
-        font-family: "Arial", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
         margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+
+      #input-container {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      input {
+        margin-right: 10px;
       }
 
       #image-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 20px;
+        display: grid;
+        grid-gap: 5px;
       }
 
-      .image-card {
-        width: calc(100% / var(--columns));
-        height: calc(100% / var(--rows));
-        overflow: hidden;
+      .card {
         cursor: pointer;
-        transition: opacity 0.5s ease;
-      }
-
-      .image-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        transition: opacity 0.5s ease-in-out;
       }
     </style>
   </head>
   <body>
-    <input type="number" id="inputX" placeholder="Enter X" />
-    <input type="number" id="inputY" placeholder="Enter Y" />
-    <button onclick="splitImage()">Split Image</button>
-
+    <div id="input-container">
+      <input
+        type="number"
+        id="inputX"
+        placeholder="Enter number of columns (X)"
+      />
+      <input type="number" id="inputY" placeholder="Enter number of rows (Y)" />
+      <button onclick="splitImage()">Split Image</button>
+    </div>
     <div id="image-container"></div>
 
     <script>
       function splitImage() {
-        const inputX = parseInt(document.getElementById("inputX").value);
-        const inputY = parseInt(document.getElementById("inputY").value);
+        const container = document.getElementById("image-container");
+        const inputX = document.getElementById("inputX").value;
+        const inputY = document.getElementById("inputY").value;
 
-        if (isNaN(inputX) || isNaN(inputY) || inputX <= 0 || inputY <= 0) {
-          alert("Please enter valid values for X and Y.");
-          return;
-        }
+        // Clear existing cards
+        container.innerHTML = "";
 
-        const imageContainer = document.getElementById("image-container");
-        imageContainer.innerHTML = "";
+        // Load image
+        const img = new Image();
+        img.src = "your_image.jpg"; // Replace 'your_image.jpg' with the path to your image
+        img.onload = function () {
+          container.style.gridTemplateColumns = `repeat(${inputX}, 1fr)`;
+          container.style.gridTemplateRows = `repeat(${inputY}, 1fr)`;
 
-        const imageUrl = "wallpaper.jpg"; // Replace with the path to your image
+          const cardWidth = img.width / inputX;
+          const cardHeight = img.height / inputY;
 
-        document.documentElement.style.setProperty("--columns", inputX);
-        document.documentElement.style.setProperty("--rows", inputY);
+          // Create cards
+          for (let i = 0; i < inputY; i++) {
+            for (let j = 0; j < inputX; j++) {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.style.width = cardWidth + "px";
+              card.style.height = cardHeight + "px";
+              card.style.backgroundImage = `url(${img.src})`;
+              card.style.backgroundSize = `${img.width}px ${img.height}px`;
+              card.style.backgroundPosition = `-${j * cardWidth}px -${
+                i * cardHeight
+              }px`;
 
-        for (let row = 0; row < inputY; row++) {
-          for (let col = 0; col < inputX; col++) {
-            const card = document.createElement("div");
-            card.className = "image-card";
-            card.onclick = () => {
-              card.style.opacity = "0";
-              setTimeout(() => {
-                card.style.display = "none";
-              }, 500);
-            };
+              // Add click event to remove card with animation
+              card.onclick = function () {
+                card.style.opacity = 0;
+                setTimeout(() => {
+                  container.removeChild(card);
+                }, 500); // Adjust the duration of the animation (in milliseconds)
+              };
 
-            const image = document.createElement("img");
-            image.src = imageUrl;
-            card.appendChild(image);
-
-            imageContainer.appendChild(card);
+              container.appendChild(card);
+            }
           }
-        }
+        };
       }
     </script>
   </body>
