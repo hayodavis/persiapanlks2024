@@ -28,7 +28,7 @@
     <title>Calendar</title>
     <style>
         body {
-    font-family: 'Arial', sans-serif;
+            font-family: 'Times New Roman', Times, serif ;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -65,13 +65,14 @@ thead tr {
     color: red;
 }
 
-th, td {
+td {
     padding: 10px;
     border: 1px solid #ddd;
 }
 
 th {
-    background-color: #f2f2f2;
+
+    border:0px;
 }
 
 td {
@@ -79,8 +80,15 @@ td {
 }
 
 .today {
-    background-color: #ffd700;
+    background-color: red;
     font-weight: bold;
+    color:white;
+}
+.kiri {
+    transform: rotate(270deg);
+}
+.kanan {
+    transform: rotate(90deg);
 }
 
 /* Add more styles as needed */
@@ -89,12 +97,12 @@ td {
 </head>
 <body>
     <div id="calendar">
-        <h2><?php echo $dateTime->format('F Y'); ?></h2>
+        
         
         <div id="header">
-            <a href="?date=<?php echo $prevMonth; ?>">&lt;</a>
+            <a class="kiri" href="?date=<?php echo $prevMonth; ?>">&#128314;</a>
             <span><?php echo $dateTime->format('F Y'); ?></span>
-            <a href="?date=<?php echo $nextMonth; ?>">&gt;</a>
+            <a class="kanan" href="?date=<?php echo $nextMonth; ?>">&#128314;</a>
         </div>
         
         <table>
