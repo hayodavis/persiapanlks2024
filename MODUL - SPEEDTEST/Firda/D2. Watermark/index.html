@@ -8,6 +8,7 @@
       #container {
         position: relative;
         display: inline-block;
+        padding-top: 15px;
       }
 
       #image,
@@ -19,25 +20,79 @@
 
       #watermark {
         position: absolute;
-        top: 10px; 
-        right: 10px; 
-        opacity: 0.5; 
-        pointer-events: none; 
+        top: 25px;
+        right: 15px;
+        opacity: 0.5;
+        pointer-events: none;
       }
     </style>
   </head>
   <body>
+    <div>
+      <input type="file" id="imageInput" accept="image/*" />
+      <button onclick="applyWatermark()">Submit</button>
+    </div>
     <div id="container">
-      <img id="image" src="beach.jpg" alt="Original Image" />
-      <img id="watermark" src="logo.png" alt="Watermark Logo" />
+      <img id="image" alt="Original Image" style="display: none" />
+      <img
+        id="watermarkedImage"
+        alt="Watermarked Image"
+        style="display: none"
+      />
+      <img
+        id="watermark"
+        src="logo.png"
+        alt="Watermark Logo"
+        style="display: none"
+      />
     </div>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      function applyWatermark() {
+        var input = document.getElementById("imageInput");
         var image = document.getElementById("image");
-        image.src = "beach.jpg"; 
+        var watermarkedImage = document.getElementById("watermarkedImage");
         var watermark = document.getElementById("watermark");
-        watermark.src = "logo.png"; 
-      });
+
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            image.src = e.target.result;
+            image.style.display = "block";
+            watermark.style.display = "block";
+
+            watermarkedImage.src = applyWatermarkToImage(image, watermark);
+            watermarkedImage.style.display = "block";
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      function applyWatermarkToImage(image, watermark) {
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        context.drawImage(image, 0, 0);
+
+        var watermarkWidth = image.width / 4; 
+        var watermarkHeight =
+          (watermarkWidth / watermark.width) * watermark.height;
+
+        context.globalAlpha = 0.5;
+        context.drawImage(
+          watermark,
+          canvas.width - watermarkWidth,
+          0,
+          watermarkWidth,
+          watermarkHeight
+        );
+
+        return canvas.toDataURL("image/png");
+      }
     </script>
   </body>
 </html>
