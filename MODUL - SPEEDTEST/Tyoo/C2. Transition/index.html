@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Split Image into Cards</title>
+  <style>
+    #image-container {
+      position: relative;
+    }
+
+    .card {
+      border: 1px solid #000;
+      cursor: pointer;
+      position: absolute;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+<input type="number" id="inputX" placeholder="Enter X">
+<input type="number" id="inputY" placeholder="Enter Y">
+<button onclick="splitImage()">Split Image</button>
+
+<div id="image-container">
+  <img id="original-image" src="unnamed.jpg" alt="Original Image" style="max-width: 100%; height: auto;">
+</div>
+
+<script>
+  function splitImage() {
+    const inputX = parseInt(document.getElementById('inputX').value);
+    const inputY = parseInt(document.getElementById('inputY').value);
+
+    if (isNaN(inputX) || isNaN(inputY) || inputX <= 0 || inputY <= 0) {
+      alert("Please enter valid values for X and Y.");
+      return;
+    }
+
+    const imageContainer = document.getElementById('image-container');
+    const originalImage = document.getElementById('original-image');
+    
+    const containerWidth = imageContainer.clientWidth;
+    const containerHeight = imageContainer.clientHeight;
+
+    const cardWidth = containerWidth / inputX;
+    const cardHeight = containerHeight / inputY;
+
+    for (let i = 0; i < inputX; i++) {
+      for (let j = 0; j < inputY; j++) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.width = cardWidth + 'px';
+        card.style.height = cardHeight + 'px';
+        card.style.top = j * cardHeight + 'px';
+        card.style.left = i * cardWidth + 'px';
+
+        card.addEventListener('click', function () {
+          animateCardDisappear(card);
+        });
+
+        imageContainer.appendChild(card);
+      }
+    }
+  }
+
+  function animateCardDisappear(card) {
+    card.style.opacity = '0';
+
+    setTimeout(function () {
+      card.style.display = 'none';
+    }, 500);
+  }
+</script>
+
+</body>
+</html>
