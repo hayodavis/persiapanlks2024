@@ -1,0 +1,34 @@
+[
+  {
+    "direction": "sent",
+    "content": "Hello, how are you?"
+  },
+  {
+    "direction": "received",
+    "content": "Hi! I'm doing well, thanks for asking."
+  },
+  {
+    "direction": "sent",
+    "content": "That's great to hear! What have you been up to?"
+  },
+  {
+    "direction": "received",
+    "content": "Not much, just working on some projects. How about you?"
+  },
+  {
+    "direction": "sent",
+    "content": "I've been busy too, working on a new website. Do you want to check it out?"
+  },
+  {
+    "direction": "received",
+    "content": "Sure, I'd love to see it! Can you share the link?"
+  },
+  {
+    "direction": "sent",
+    "content": "Certainly! Here is the link: [Your Website Link]"
+  },
+  {
+    "direction": "received",
+    "content": "Thanks! I'll take a look."
+  }
+]
