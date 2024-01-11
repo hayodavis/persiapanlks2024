@@ -1,0 +1,136 @@
+body {
+    background-color: rgb(92, 84, 84);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-top: 30px;
+  }
+  .box {
+    width: 360px;
+    height: 640px;
+    background-color: white;
+    margin: auto;
+    border-radius:10px;
+    position: relative;
+  }
+  .avatar {
+    background-color: antiquewhite;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+  }
+  .avatar img {
+    width: 75px;
+    border-radius: 50%;
+  }
+  header.satu {
+    height: 80px;
+    background-color: #47b5ff;
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    align-items: center;
+  }
+  header.satu h3{
+    margin-left: 20px;
+    color: #bee5ff;
+  }
+  header h3 {
+    color: white;
+  }
+  .text h3,
+  .text p {
+    margin: 0px;
+  }
+  .text p {
+    color: #707070;
+  }
+  .message-preview1, .message-preview2 {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  .avatar-text {
+    width: 50px;
+    height: 50px;
+    background-color: antiquewhite;
+    border-radius: 50%;
+    margin: 20px;
+  }
+  .avatar-text img {
+    width: 50px;
+    border-radius: 50%;
+  }
+  .pesanbaru {
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 18px;
+    background-color: #47b5ff;
+    width: 50px;
+    height: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  header.dua {
+    height: 80px;
+    background-color: #47b5ff;
+    display: flex;
+    border-radius: 10px 10px 0px 0px;
+    align-items: center;
+    position: relative;
+  }
+  h4 {
+    color: white;
+  }
+  
+  section.pesan {
+    margin: 10px;
+    position: relative;
+  }
+  section.pesan2 {
+    margin: 10px;
+    margin-top: 85px;
+    position: relative;
+  }
+  p.chat-pengirim {
+    text-align: left;
+    background-color: lightgray;
+    padding: 10px;
+    width: max-content;
+    border-radius: 0px 10px 10px 10px;
+  }
+  p.chat-penerima {
+    text-align: right;
+    padding: 10px;
+    background-color: #47b5ff;
+    width: max-content;
+    float: right;
+    border-radius: 10px 0px 10px 10px;
+  }
+  .tempat-chat {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    margin: 10px;
+    gap: 5px;
+    justify-content: space-between;
+  }
+  input.kirimpesan {
+    padding: 10px;
+    border-radius: 30px;
+    width: 270px;
+  }
+  .tombol-kirim {
+    width: 40px;
+    height: 40px;
+    background-color: #47b5ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
