@@ -12,9 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function xmlToJson($xmlString)
 {
-    $xml = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
-    $json = json_encode($xml, JSON_PRETTY_PRINT);
+    $xml = simplexml_load_string($xmlString);
+    $json = json_encode([$xml->getName() => xmlToArray($xml)], JSON_PRETTY_PRINT);
     return $json;
+}
+
+function xmlToArray($xml)
+{
+    $array = [];
+
+    foreach ($xml->children() as $child) {
+        if ($child->count() > 0) {
+            $array[$child->getName()] = xmlToArray($child);
+        } else {
+            $array[$child->getName()] = (string) $child;
+        }
+    }
+
+    return $array;
 }
 
 ?>
