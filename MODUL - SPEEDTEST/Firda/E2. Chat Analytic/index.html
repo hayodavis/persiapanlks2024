@@ -47,11 +47,17 @@
 
           // Display results
           analyticsResultsDiv.innerHTML = `
-        <p>Top 5 sent words: ${top5SentWords}</p>
-        <p>Total messages sent: ${totalMessagesSent}</p>
-        <p>Total messages received: ${totalMessagesReceived}</p>
-        <p>Average character length sent: ${avgCharLengthSent}</p>
-        <p>Average character length received: ${avgCharLengthReceived}</p>
+          <ul> 
+            <li>Top 5 sent words: 
+              <ul>
+                ${top5SentWords.map((word) => `<li>${word}</li>`).join("")}
+              </ul>
+            </li>
+            <li>Total messages sent: ${totalMessagesSent}</li>
+            <li>Total messages received: ${totalMessagesReceived}</li>
+            <li>Average character length sent: ${avgCharLengthSent}</li>
+            <li>Average character length received: ${avgCharLengthReceived}</li>
+          </ul>
       `;
         };
 
@@ -72,9 +78,7 @@
           .sort((a, b) => b[1] - a[1])
           .slice(0, n);
 
-        return sortedWords
-          .map(([word, count]) => `${word}(${count}x)`)
-          .join(", ");
+        return sortedWords.map(([word, count]) => `${word}(${count}x)`);
       }
 
       function calculateAverageCharLength(messages) {
