@@ -8,7 +8,22 @@
       #imageGrid {
         display: grid;
         gap: 5px;
-        padding-top: 25px;
+        padding-top: 15px;
+      }
+
+      #originalImage{
+        padding-top: 15px;
+      }
+
+      #imageContainer {
+        display: flex;
+        align-items: flex-start;
+      }
+      
+      #originalImage,
+      #imageGrid {
+        width: 48%; 
+        margin: 5px;
       }
 
       .grid-item {
@@ -25,7 +40,10 @@
     <input type="number" id="columns" min="1" />
     <button onclick="generateImageGrid()">Split Image</button>
 
-    <div id="imageGrid"></div>
+    <div id="imageContainer">
+      <img id="originalImage" src="bear.jpg" />
+      <div id="imageGrid"></div>
+    </div>
 
     <script>
       function generateImageGrid() {
