@@ -38,7 +38,6 @@
     }
 
     const imageContainer = document.getElementById('image-container');
-    const originalImage = document.getElementById('original-image');
     
     const containerWidth = imageContainer.clientWidth;
     const containerHeight = imageContainer.clientHeight;
@@ -56,7 +55,7 @@
         card.style.left = i * cardWidth + 'px';
 
         card.addEventListener('click', function () {
-          animateCardDisappear(card);
+          animateCardTransparent(card);
         });
 
         imageContainer.appendChild(card);
@@ -64,11 +63,12 @@
     }
   }
 
-  function animateCardDisappear(card) {
+  function animateCardTransparent(card) {
     card.style.opacity = '0';
 
     setTimeout(function () {
-      card.style.display = 'none';
+      card.style.visibility = 'hidden';
+      card.style.opacity = '1';  // Reset opacity for reuse
     }, 500);
   }
 </script>
