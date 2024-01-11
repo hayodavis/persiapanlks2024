@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Landing Page</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        background-color: #444;
+        padding: 10px;
+      }
+
+      .logo {
+        width: 50px; /* Adjust as needed */
+        height: auto;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+
+      li {
+        margin-right: 20px;
+      }
+
+      li:last-child {
+        margin-right: 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+      }
+
+      a:hover {
+        color: #ffd700; /* Adjust the color on hover */
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .hero-section {
+        background-image: url("your-hero-image.jpg"); /* Replace with your image */
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        padding: 100px 20px;
+      }
+
+      .cta {
+        background-color: #ffd700;
+        color: #333;
+        padding: 15px 30px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      .cta:hover {
+        background-color: #ffcc00; /* Adjust the color on hover */
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Rynz</h1>
+    </header>
+
+    <nav>
+      <div class="logo-container">
+        <img src="image/webicon.svg" alt="Your Logo" class="logo" />
+      </div>
+
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">About</a></li>
+        <li class="dropdown">
+          <a href="#">Layanan</a>
+          <div class="dropdown-content">
+            <a href="#">layanan 1</a>
+            <a href="#">Layanan 2</a>
+            <a href="#">Layanan 3</a>
+          </div>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-section">
+      <h2>Selamat datang di Website kami</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <a href="#" class="cta">Ayo Mulai</a>
+    </div>
+  </body>
+</html>
