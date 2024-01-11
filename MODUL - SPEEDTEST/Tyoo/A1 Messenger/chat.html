@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+            width: 360px;
+            height: 640px;
+            border: 1px solid black;
+            margin: 20px auto ;
+            box-sizing: border-box; 
+        }
+
+        .header{
+            width: 360;
+            background-color: aqua;
+            display: flex;
+        }
+
+        .header img{
+            width: 60px;
+            height: 60px;
+            margin: 10px ;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-top: 25px;
+        }
+
+        .header .menu{
+            font-size: 10px;
+            margin-top: 10px;
+            margin-left: 120px;
+            cursor: pointer;
+        }
+
+        .bubble1{
+            width: 200px;
+            margin: 5px;
+            padding-left: 5px;
+            background-color: #858383;
+            font-size: 20px;
+            border-radius: 5px;
+            float: left;
+
+        }
+
+        .bubble2{
+            width: 200px;
+            margin: 5px;
+            padding-left: 5px;
+            background-color: #5ef878;
+            font-size: 20px;
+            border-radius: 5px;
+            float: right;
+        }
+
+        .mengetik{
+            width: 360px;
+            position: absolute;
+            margin-top: 515px;
+            margin-left: 5px;
+
+        }
+
+        .mengetik input{
+            width: 300px;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+        .mengetik img{
+            width: 20px;
+            height: 20px;
+            background-color: #5ef878;
+
+        }
+
+        .mengetik button{
+            width: 40px;
+            height: 35px;
+            background-color: #5ef878;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="header">
+        <img src="image/avatar 2.png" alt="">
+        <h1>Rifki Adi</h1>
+        <div class="menu">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chat">
+    <div class="bubble1">
+        <p>Assalamualaikum</p>
+    </div>
+
+    <div class="bubble2">
+        <p>Waalaikumsalam</p>
+    </div>
+
+    <div class="bubble1">
+        <p>Ga jadi</p>
+    </div>
+
+    <div class="bubble2">
+        <p>Astagfirlah temanku</p>
+    </div>
+    </div>
+
+    <div class="mengetik">
+        <input type="text" placeholder="Tulis Pesan...">
+        <button><img src="image/pngwing.com.png" alt=""></button>
+    </div>
+
+</body>
+</html>
