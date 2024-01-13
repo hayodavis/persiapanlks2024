@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>messenger</title>
+    <style>
+       body {
+        background-color: #b88c8c;
+       }
+       .roomchat {
+        width: 360px;
+        height: 640px;
+        border: 1px solid black;
+        margin: 30px;
+        border-radius: 10px;
+        display: flex;
+        background-color: #fff;
+        margin-left: 200px;
+       }
+       .topbox1 {
+        width: 360px;
+        height: 90px;
+        background-color: #CD8D7A;
+        border-radius: 10px 10px 0px 0px;
+       }
+       .profil {
+        width: 60px;
+        height: 70px;
+        border-radius: 50%;
+        position: absolute;
+        margin-left: 280px;
+        top: 40px;
+       }
+       h1 {
+        margin: 20px;
+        color: #c84720;
+       }
+       .chat {
+        border-bottom: 1px solid black;
+        width: 360px;
+        height: 100px;
+        position: absolute;
+        margin-top: 13px;
+       }
+       .chat img {
+        width: 80px;
+        height: 84px;
+        border-radius: 50%;
+        margin: 8px 0px 0px 20px;
+       }
+       .chat h2 {
+        position: absolute;
+        margin-left: 130px;
+        top: 0px;
+       }
+       .chat p {
+        position: absolute;
+        margin-left: 130px;
+        top: 40px;
+       }
+       .chat1 {
+        border-bottom: 1px solid black;
+        width: 360px;
+        height: 100px;
+        position: absolute;
+        margin-top: 120px;
+       }
+       .chat1 img {
+        width: 80px;
+        height: 84px;
+        border-radius: 50%;
+        margin: 8px 0px 0px 20px;
+       }
+       .chat1 h2 {
+        position: absolute;
+        margin-left: 130px;
+        top: 0px;
+       }
+       .chat1 p {
+        position: absolute;
+        margin-left: 130px;
+        top: 45px;
+       }
+       .chat2 {
+        border-bottom: 1px solid black;
+        width: 360px;
+        height: 100px;
+        position: absolute;
+        margin-top: 220px;
+       }
+       .chat2 img {
+        width: 80px;
+        height: 84px;
+        border-radius: 50%;
+        margin: 8px 0px 0px 20px;
+       }
+       .chat2 h2 {
+        position: absolute;
+        margin-left: 130px;
+        top: 0px;
+       }
+       .chat2 p {
+        position: absolute;
+        margin-left: 130px;
+        top: 45px;
+       }
+       .btnadd {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: #c84720;
+        color: white;
+        position: absolute;
+        margin: 460px 0px 0px 260px;
+        font-size: 60px;
+       }
+       .chatwithuser {
+        width: 360px;
+        height: 640px;
+        border: 1px solid black;
+        right: 0px;
+        top: 30px;
+        border-radius: 10px;
+        background-color: white;
+        position: absolute;
+        margin-right: 200px;
+       }
+       .topbox2 {
+        width: 360px;
+        height: 90px;
+        background-color: #CD8D7A;
+        border-radius: 10px 10px 0px 0px;
+        display: flex;
+       }
+       .topbox2 img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        position: absolute;
+        top: 11px;
+        margin-left: 20px;
+       }
+       .topbox2 h2 {
+        position: absolute;
+        margin-left: 110px;
+        top: 10px;
+       }
+       .topbox2 ul {
+        position: absolute;
+        margin-left: 290px;
+       }
+       .bbc1 {
+        width: 240px;
+        height: 40px;
+        background-color: #c84720;
+        margin: 10px;
+        text-align: center;
+        border-radius: 5px;
+        color: white;
+        font-size: 20px;
+       }
+       .bbc2 {
+        width: 160px;
+        height: 40px;
+        background-color: #c84720;
+        position: absolute;
+        right: 10px;
+        text-align: center;
+        border-radius: 5px;
+        color: white;
+        font-size: 20px;
+       }
+       .bbc3 {
+        width: 190px;
+        height: 40px;
+        background-color: #c84720;
+        margin: 10px;
+        text-align: center;
+        border-radius: 5px;
+        color: white;
+        font-size: 20px; 
+        position: absolute;
+        top: 190px;
+       }
+       .bottmchat {
+        position: absolute;
+        bottom: 0px;
+       }
+       .bottmchat input {
+        width: 260px;
+        height: 40px;
+        border-radius: 0px 0px 0px 10px;
+       }
+       .bottmchat button {
+        width: 88px;
+        height: 40px;
+        background-color: #CD8D7A;
+       }
+    </style>
+</head>
+<body>
+    <div class="roomchat">
+        <div class="topbox1">
+            <h1>messenger</h1>
+            <img class="profil" src="img/mee.jpg" alt="profil">
+            <div class="chat">
+                <img src="img/ceyeeee.jpg" alt="avatar1">
+                <h2>mang kardus</h2>
+                <p>haloooo</p>
+            </div>
+            <div class="chat1">
+                <img src="img/iannn.jpg" alt="avatar2">
+                <h2>dprian</h2>
+                <p>yoi</p>
+            </div>
+            <div class="chat2">
+                <img src="img/toji.jpg" alt="avatar3">
+                <h2>pak ustad</h2>
+                <p>baik dek</p>
+            </div>
+            <button class="btnadd">+</button>
+        </div>
+    </div>
+    <div class="chatwithuser">
+        <div class="topbox2">
+            <img src="img/ceyeeee.jpg" alt="ava">
+            <h2>mang kardus</h2>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="bbc1">yaudah, duluan ya nite sa</div>
+        <div class="bbc2">good night jugaa</div>
+        <div class="bbc3">halooo, morn issa</div>
+        <div class="bottmchat">
+            <input type="text" placeholder="type ur message..">
+            <button>send</button>
+        </div>
+
+    </div>
+</body>
+</html>
