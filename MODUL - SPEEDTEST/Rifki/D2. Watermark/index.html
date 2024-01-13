@@ -13,11 +13,9 @@
         height: 100vh;
         background-color: #f0f0f0;
       }
-
       .image-container {
         position: relative;
       }
-
       .watermark {
         position: absolute;
         top: 10px;
@@ -26,50 +24,34 @@
         flex-direction: column;
         align-items: flex-end;
       }
-
-      .logo {
-        width: 50px; /* Adjust the size of your logo */
-        height: auto;
-      }
-
       .watermark-text {
-        font-size: 12px; /* Adjust the font size of your watermark text */
-        color: #000; /* Adjust the color of your watermark text */
+        font-size: 12px;
+        color: #000;
         margin-top: 5px;
       }
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Initial watermark text
-        let watermarkText = "Your Watermark";
-
-        // Get elements
+        // Fixed watermark text
+        const watermarkText = "Your Watermark";
         const watermarkTextElement = document.querySelector(".watermark-text");
-        const imageContainer = document.querySelector(".image-container");
 
-        // Function to update watermark text
-        function updateWatermarkText() {
-          watermarkText =
-            prompt("Enter new watermark text:", watermarkText) || watermarkText;
-          watermarkTextElement.textContent = watermarkText;
-        }
-
-        // Handle user click to update watermark text
-        imageContainer.addEventListener("click", updateWatermarkText);
+        // Set the fixed watermark text
+        watermarkTextElement.textContent = watermarkText;
       });
     </script>
     <title>Watermark Example</title>
   </head>
   <body>
     <div class="image-container">
-      <img
-        src="/Rifki/D2. Watermark/download (1).jpg"
-        alt="Original Image"
-        id="originalImage"
-      />
+      <img src="download (1).jpg" alt="Original Image" id="originalImage" />
       <div class="watermark" id="watermark">
-        <img src="/Rifki/D2. Watermark/download.jpg" alt="Logo" class="logo" />
-        <span class="watermark-text">Rifki GG</span>
+        <img
+          src="Clever_Logos_Of_Letters_A_To_Z_Based_On_Common_Words_That_Start_With_Them-removebg-preview.png"
+          alt="Watermark"
+          width="100px"
+          height="100px"
+        />
       </div>
     </div>
   </body>
