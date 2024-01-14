@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Landing Page</title>
+    <title>Landing Page</title>
     <style>
       body {
         font-family: "Arial", sans-serif;
@@ -69,6 +69,18 @@
         z-index: 1;
       }
 
+      .dropdown-content a {
+        color: #fff;
+        padding: 12px 16px;
+        display: block;
+        text-decoration: none;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #ffd700;
+        color: black;
+      }
+
       .dropdown:hover .dropdown-content {
         display: block;
       }
@@ -92,43 +104,36 @@
       }
 
       .cta:hover {
-        background-color: #ffcc00; /* Adjust the color on hover */
+        background-color: #ffcc00;
         color: white;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Rynz</h1>
+      <img src="image/webicon.svg" alt="Your Logo" class="logo" />
     </header>
 
     <nav>
-      <div class="logo-container">
-        <img src="image/webicon.svg" alt="Your Logo" class="logo" />
-      </div>
-
       <ul>
-        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
+        <li><a href="#">Service</a></li>
         <li class="dropdown">
-          <a href="#">Layanan</a>
+          <a href="#">Contact</a>
           <div class="dropdown-content">
-            <a href="#">layanan 1</a>
-            <a href="#">Layanan 2</a>
-            <a href="#">Layanan 3</a>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Youtube</a>
           </div>
         </li>
-        <li><a href="#">Contact</a></li>
       </ul>
     </nav>
 
     <div class="hero-section">
       <h2>Selamat datang di Website kami</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-      <a href="#" class="cta">Ayo Mulai</a>
+      <a href="#" class="cta">Ayo Mulai!</a>
     </div>
   </body>
 </html>

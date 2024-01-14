@@ -1,34 +1,36 @@
-[
-  {
-    "direction": "sent",
-    "content": "Hello, how are you?"
-  },
-  {
-    "direction": "received",
-    "content": "Hi! I'm doing well, thanks for asking."
-  },
-  {
-    "direction": "sent",
-    "content": "That's great to hear! What have you been up to?"
-  },
-  {
-    "direction": "received",
-    "content": "Not much, just working on some projects. How about you?"
-  },
-  {
-    "direction": "sent",
-    "content": "I've been busy too, working on a new website. Do you want to check it out?"
-  },
-  {
-    "direction": "received",
-    "content": "Sure, I'd love to see it! Can you share the link?"
-  },
-  {
-    "direction": "sent",
-    "content": "Certainly! Here is the link: [Your Website Link]"
-  },
-  {
-    "direction": "received",
-    "content": "Thanks! I'll take a look."
-  }
-]
+{
+  "chat_history": [
+    {
+      "sender": "user",
+      "message": "Hi there! How are you doing?"
+    },
+    {
+      "sender": "bot",
+      "message": "Hello! I'm doing well, thank you. How can I assist you today?"
+    },
+    {
+      "sender": "user",
+      "message": "I have a question about your products."
+    },
+    {
+      "sender": "bot",
+      "message": "Sure, go ahead and ask your question. I'm here to help."
+    },
+    {
+      "sender": "user",
+      "message": "What are the different payment options available?"
+    },
+    {
+      "sender": "bot",
+      "message": "We accept credit cards, PayPal, and bank transfers as payment options. You can choose the one that suits you best."
+    },
+    {
+      "sender": "user",
+      "message": "Thanks for the information!"
+    },
+    {
+      "sender": "bot",
+      "message": "You're welcome! If you have any more questions, feel free to ask. Have a great day!"
+    }
+  ]
+}
