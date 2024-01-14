@@ -141,7 +141,7 @@ td {
                         }
 
                         // Fill in the remaining cells with empty cells for next month
-                        $remainingCells = 7 - (($firstDay + $lastDay - 1) % 7);
+                        $remainingCells = 1 - (($firstDay + $lastDay - 1) % 1);
                         for ($i = 0; $i < $remainingCells; $i++) {
                             echo '<td></td>';
                         }
