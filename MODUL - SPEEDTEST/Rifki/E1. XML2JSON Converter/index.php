@@ -14,7 +14,13 @@
         }
         button {
             margin-top: 10px;
+            background-color: #025aa5;
+            border-color: #94bbfa;
+            color: white;
+            height: 40px;
+            border-radius: 3px;
         }
+        
     </style>
 </head>
 <body>
