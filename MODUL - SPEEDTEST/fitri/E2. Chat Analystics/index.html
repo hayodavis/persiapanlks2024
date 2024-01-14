@@ -36,7 +36,7 @@
             const sentMessages = data.messages.filter(message => message.type === 'sent');
             const receivedMessages = data.messages.filter(message => message.type === 'received');
 
-            const allSentWords = sentMessages.map(message => message.content.split(' ')).flat();
+            const allSentWords = sentMessages.map(message => message.content.split(/\s+/)).flat();
             const top5SentWords = countTopWords(allSentWords);
 
             const totalMessagesSent = sentMessages.length;
@@ -64,7 +64,7 @@
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 5);
 
-            return sortedWordCount;
+            return sortedWordCount.map(entry => entry[0]);
         }
 
         function calculateAverageCharLength(messages) {
@@ -80,7 +80,7 @@
 
             for (const key in analytics) {
                 const paragraph = document.createElement('p');
-                paragraph.innerHTML = `<strong>${key}:</strong> ${analytics[key]}`;
+                paragraph.innerHTML = `<strong>${key}:</strong> ${Array.isArray(analytics[key]) ? analytics[key].join(', ') : analytics[key]}`;
                 resultDiv.appendChild(paragraph);
             }
         }
