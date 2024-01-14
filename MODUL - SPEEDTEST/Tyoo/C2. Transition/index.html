@@ -3,75 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Split Image into Cards</title>
   <style>
-    #image-container {
+    .card {
+      width: calc(100% / var(--x));
+      height: calc(100% / var(--y));
+      display: inline-block;
+      overflow: hidden;
       position: relative;
     }
 
-    .card {
-      border: 1px solid #000;
-      cursor: pointer;
-      position: absolute;
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       transition: opacity 0.5s;
     }
   </style>
 </head>
 <body>
 
-<input type="number" id="inputX" placeholder="Enter X">
-<input type="number" id="inputY" placeholder="Enter Y">
-<button onclick="splitImage()">Split Image</button>
-
-<div id="image-container">
-  <img id="original-image" src="unnamed.jpg" alt="Original Image" style="max-width: 100%; height: auto;">
-</div>
-
 <script>
   function splitImage() {
-    const inputX = parseInt(document.getElementById('inputX').value);
-    const inputY = parseInt(document.getElementById('inputY').value);
+    var x = document.getElementById("xInput").value;
+    var y = document.getElementById("yInput").value;
 
-    if (isNaN(inputX) || isNaN(inputY) || inputX <= 0 || inputY <= 0) {
-      alert("Please enter valid values for X and Y.");
-      return;
+    var container = document.getElementById("imageContainer");
+    container.innerHTML = '';
+
+    for (var i = 0; i < x * y; i++) {
+      var card = document.createElement("div");
+      card.classList.add("card");
+
+      var img = document.createElement("img");
+      img.src = "unnamed.jpg"; // Replace with your image URL
+      img.addEventListener("click", function() {
+        this.style.opacity = 0;
+      });
+
+      card.appendChild(img);
+      container.appendChild(card);
     }
 
-    const imageContainer = document.getElementById('image-container');
-    
-    const containerWidth = imageContainer.clientWidth;
-    const containerHeight = imageContainer.clientHeight;
-
-    const cardWidth = containerWidth / inputX;
-    const cardHeight = containerHeight / inputY;
-
-    for (let i = 0; i < inputX; i++) {
-      for (let j = 0; j < inputY; j++) {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.width = cardWidth + 'px';
-        card.style.height = cardHeight + 'px';
-        card.style.top = j * cardHeight + 'px';
-        card.style.left = i * cardWidth + 'px';
-
-        card.addEventListener('click', function () {
-          animateCardTransparent(card);
-        });
-
-        imageContainer.appendChild(card);
-      }
-    }
-  }
-
-  function animateCardTransparent(card) {
-    card.style.opacity = '0';
-
-    setTimeout(function () {
-      card.style.visibility = 'hidden';
-      card.style.opacity = '1';  // Reset opacity for reuse
-    }, 500);
+    document.documentElement.style.setProperty('--x', x);
+    document.documentElement.style.setProperty('--y', y);
   }
 </script>
+
+<h2>Image Splitter</h2>
+<label for="xInput">X:</label>
+<input type="number" id="xInput" value="5">
+
+<label for="yInput">Y:</label>
+<input type="number" id="yInput" value="3">
+
+<button onclick="splitImage()">Split Image</button>
+
+<div id="imageContainer"></div>
 
 </body>
 </html>

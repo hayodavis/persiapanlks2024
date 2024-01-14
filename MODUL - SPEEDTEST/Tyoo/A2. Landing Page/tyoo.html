@@ -1,94 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-    body{
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Landing Page</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
+      }
 
-    header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+      }
 
-    nav {
-            background-color: #444;
-            padding: 10px;
-            display: flex;
-        }
+      nav {
+        background-color: #444;
+        padding: 10px;
+      }
 
-     nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 0 10px;
-        }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        margin-right: 10px;
+      }
 
-        nav a:hover{
-            color: rgb(205, 200, 50);
-        }
+      nav a:hover {
+        color: #00bcd4;
+      }
 
-        .cta {
-            background-color: #3498db;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-        }
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
 
-        /* dropdown */
-        .dropdown{
-            display: inline-block;
-            padding-top: 10px;
-        }
+      .hero-section {
+        background-image: url("image/download.jpeg");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        padding: 100px 20px;
+      }
 
-        .content{
-            display: none;
-            position: absolute;
-            margin-top: 10px;
-            background-color: #4407bf;
-        }
-        .dropdown:hover .content {
-            display: block;
-        }
+      .hero-heading {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
 
+      .cta {
+        background-color: #00bcd4;
+        color: #fff;
+        padding: 15px 30px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.2em;
+        border-radius: 5px;
+        display: inline-block;
+      }
 
-</style>
-<body>
+      .cta:hover {
+        background-color: #007b8e;
+      }
+
+      .dropdown {
+        display: inline-block;
+        position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #444;
+        min-width: 160px;
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: #fff;
+        padding: 12px 16px;
+        display: block;
+        text-decoration: none;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #00bcd4;
+        color: black;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
     <header>
-        <img src="image/20231003_075947.png" width="100px" height="100px">
+      <img src="image/20231003_075947.png" alt="Logo" width="100px">
     </header>
 
     <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-        <div class="dropdown">
-        <a href="">Menu</a>
-        <div class="content">
-            <a href="#">Menu 1</a>
-            <a href="#">Menu 2</a>
-            <a href="#">Menu 3</a>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <div class="dropdown">
+        <a href="#">Service</a>
+        <div class="dropdown-content">
+          <a href="#">Service 1</a>
+          <a href="#">Service 2</a>
         </div>
-    </div>
+      </div>
     </nav>
 
-    <div class="hero">
-        <h1>HERO</h1>
+    <div class="hero-section">
+      <div class="hero-heading">
+        <h2>Welcome to My Website</h2>
+      </div>
     </div>
 
-    <div class="cta">
-        <p>jangan lupa subscribe</p>
-        <a href="">Klik disini</a>
-    </div>
-
-</body>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim earum dolor perspiciatis fuga saepe quam doloremque minima itaque ab quaerat facere dolore cum alias odit sapiente ullam sequi, sint impedit, esse tempore reprehenderit ea. Consequatur, soluta impedit. Incidunt, quos assumenda veniam fugit sequi eligendi facilis! Et expedita totam voluptatum autem! Optio cumque ullam fugiat, reiciendis, enim accusantium modi perferendis beatae cupiditate obcaecati dolorem architecto incidunt sit! Exercitationem ducimus, eaque distinctio quasi voluptates neque voluptate praesentium itaque provident ullam consectetur quos, facere quo aperiam dignissimos debitis. Quia voluptates, laboriosam amet provident, dolor iure possimus ex maiores quasi ipsam repellat? Delectus, qui.</p>
+  </body>
 </html>

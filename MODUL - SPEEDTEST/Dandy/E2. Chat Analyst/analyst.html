@@ -3,155 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Message Analytics</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-      }
-
-      #analyticsContainer {
-        margin-top: 20px;
-        text-align: left;
-      }
-
-      #messageList {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .messageItem {
-        margin-bottom: 10px;
-      }
-    </style>
+    <title>Chat Analytics</title>
   </head>
   <body>
-    <input type="file" id="fileInput" accept=".json" onchange="handleFile()" />
-    <div id="analyticsContainer" style="display: none">
-      <h2>Message Analytics</h2>
-      <div id="topWords"></div>
-      <p>Total messages sent: <span id="totalSent"></span></p>
-      <p>Total messages received: <span id="totalReceived"></span></p>
-      <p>Average character length sent: <span id="avgCharSent"></span></p>
-      <p>
-        Average character length received: <span id="avgCharReceived"></span>
-      </p>
-      <h3>Top 5 Sent Words</h3>
-      <ul id="topWordsList"></ul>
-      <h3>Message List</h3>
-      <ul id="messageList"></ul>
-    </div>
+    <h1>Chat Analytics</h1>
+
+    <input
+      type="file"
+      accept=".json"
+      id="jsonFileInput"
+      onchange="handleFileUpload()"
+    />
+    <div id="analyticsResults"></div>
 
     <script>
-      function handleFile() {
-        const fileInput = document.getElementById("fileInput");
-        const analyticsContainer =
-          document.getElementById("analyticsContainer");
-        const topWordsContainer = document.getElementById("topWords");
-        const totalSentContainer = document.getElementById("totalSent");
-        const totalReceivedContainer = document.getElementById("totalReceived");
-        const avgCharSentContainer = document.getElementById("avgCharSent");
-        const avgCharReceivedContainer =
-          document.getElementById("avgCharReceived");
-        const topWordsListContainer = document.getElementById("topWordsList");
-        const messageListContainer = document.getElementById("messageList");
+      function handleFileUpload() {
+        const fileInput = document.getElementById("jsonFileInput");
+        const analyticsResultsDiv = document.getElementById("analyticsResults");
 
         const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const data = JSON.parse(e.target.result);
-
-            // Perform analytics
-            const sentMessages = data.filter((msg) => msg.direction === "sent");
-            const receivedMessages = data.filter(
-              (msg) => msg.direction === "received"
-            );
-            const allMessages = data.length;
-            const totalSent = sentMessages.length;
-            const totalReceived = receivedMessages.length;
-            const avgCharSent = calculateAverageCharacterLength(sentMessages);
-            const avgCharReceived =
-              calculateAverageCharacterLength(receivedMessages);
-            const topWordsData = getTopWords(sentMessages);
-
-            // Display analytics
-            topWordsContainer.textContent = `Top 5 Sent Words: ${topWordsData.words.join(
-              ", "
-            )}`;
-            totalSentContainer.textContent = totalSent;
-            totalReceivedContainer.textContent = totalReceived;
-            avgCharSentContainer.textContent = avgCharSent.toFixed(2);
-            avgCharReceivedContainer.textContent = avgCharReceived.toFixed(2);
-
-            // Display top 5 sent words with counts
-            displayTopWords(topWordsData, topWordsListContainer);
-
-            // Show analytics container
-            analyticsContainer.style.display = "block";
-
-            // Display message list
-            displayMessageList(sentMessages, messageListContainer);
-          };
-
-          reader.readAsText(file);
+        if (!file) {
+          analyticsResultsDiv.innerHTML = "Please select a valid JSON file.";
+          return;
         }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const jsonData = JSON.parse(e.target.result);
+
+          const sentMessages = jsonData.messages.filter(
+            (message) => message.type === "sent"
+          );
+          const receivedMessages = jsonData.messages.filter(
+            (message) => message.type === "received"
+          );
+
+          const top5SentWords = getTopWords(sentMessages, 5);
+          const totalMessagesSent = sentMessages.length;
+          const totalMessagesReceived = receivedMessages.length;
+          const avgCharLengthSent = calculateAverageCharLength(sentMessages);
+          const avgCharLengthReceived =
+            calculateAverageCharLength(receivedMessages);
+
+          // Display results
+          analyticsResultsDiv.innerHTML = `
+          <ul> 
+            <li>Top 5 sent words: 
+              <ul>
+                ${top5SentWords.map((word) => `<li>${word}</li>`).join("")}
+              </ul>
+            </li>
+            <li>Total messages sent: ${totalMessagesSent}</li>
+            <li>Total messages received: ${totalMessagesReceived}</li>
+            <li>Average character length sent: ${avgCharLengthSent}</li>
+            <li>Average character length received: ${avgCharLengthReceived}</li>
+          </ul>
+      `;
+        };
+
+        reader.readAsText(file);
       }
 
-      function calculateAverageCharacterLength(messages) {
-        const totalCharacters = messages.reduce(
-          (sum, msg) => sum + msg.content.length,
+      function getTopWords(messages, n) {
+        const words = messages
+          .map((message) => (message.text ? message.text.split(/\s+/) : []))
+          .flat();
+        const wordCounts = {};
+
+        words.forEach((word) => {
+          wordCounts[word] = (wordCounts[word] || 0) + 1;
+        });
+
+        const sortedWords = Object.entries(wordCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, n);
+
+        return sortedWords.map(([word, count]) => `${word}(${count}x)`);
+      }
+
+      function calculateAverageCharLength(messages) {
+        const totalCharLength = messages.reduce(
+          (acc, message) => acc + message.text.length,
           0
         );
-        return totalCharacters / messages.length;
-      }
-
-      function getTopWords(messages) {
-        const wordsMap = new Map();
-
-        messages.forEach((msg) => {
-          const words = msg.content.split(/\s+/);
-          words.forEach((word) => {
-            const lowercaseWord = word.toLowerCase();
-            wordsMap.set(lowercaseWord, (wordsMap.get(lowercaseWord) || 0) + 1);
-          });
-        });
-
-        const sortedWords = Array.from(wordsMap.entries()).sort(
-          (a, b) => b[1] - a[1]
-        );
-        const topWords = sortedWords.slice(0, 5).map((item) => item[0]);
-        const topWordsWithCounts = topWords.map(
-          (word) => `${word} (${wordsMap.get(word)})`
-        );
-
-        return { words: topWordsWithCounts };
-      }
-
-      function displayTopWords(topWordsData, container) {
-        container.innerHTML = "";
-        topWordsData.words.forEach((word) => {
-          const listItem = document.createElement("li");
-          listItem.className = "messageItem";
-          listItem.textContent = word;
-          container.appendChild(listItem);
-        });
-      }
-
-      function displayMessageList(messages, container) {
-        container.innerHTML = "";
-        messages.forEach((msg) => {
-          const listItem = document.createElement("li");
-          listItem.className = "messageItem";
-          listItem.textContent = `[${msg.direction}] ${msg.content}`;
-          container.appendChild(listItem);
-        });
+        return messages.length > 0
+          ? Math.round(totalCharLength / messages.length)
+          : 0;
       }
     </script>
   </body>

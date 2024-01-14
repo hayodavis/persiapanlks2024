@@ -26,7 +26,9 @@
 
       #image-container {
         display: grid;
-        grid-gap: 5px;
+        grid-gap: 3px;
+        background-color: yellow;
+        padding: 3px;
       }
 
       .card {
@@ -43,7 +45,7 @@
       <input type="number" id="inputY" placeholder="Masukkan angka rows (Y)" value="3" />
       <button onclick="splitImage()">Split Image</button>
     </div>
-    <div id="image-container"></div>
+    <div id="image-container"><img src="wallpaper.jpg" alt=""></div>
 
     <script>
       function splitImage() {
