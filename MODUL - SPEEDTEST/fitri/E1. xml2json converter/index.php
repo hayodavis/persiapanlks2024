@@ -1,54 +1,89 @@
 <?php
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submission
+    if (isset($_POST['xmlInput'])) {
+        $xmlData = $_POST['xmlInput'];
+        
+        function convertXmlToJson($xmlData)
+        {
+            $xmlObject = simplexml_load_string($xmlData);
+            $jsonResult = json_encode($xmlObject, JSON_PRETTY_PRINT);
+            return $jsonResult;
+        }
 
-    // Retrieve XML from the form
-    $xmlString = $_POST['xmlInput'];
-
-    // Convert XML to SimpleXML object
-    $xml = simplexml_load_string($xmlString);
-
-    // Convert SimpleXML object to JSON
-    $json = json_encode($xml, JSON_PRETTY_PRINT);
-} else {
-    // Initial load or direct access to the script
-    $xmlString = '';
-    $json = '';
+        $jsonOutput = convertXmlToJson($xmlData);
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML to JSON Converter</title>
+    <title>Custom XML to JSON Converter</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #xmlInput {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #convertButton {
+            background-color: blue;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #jsonOutput {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
-
 <body>
-    <h2>XML to JSON Converter</h2>
+    <div id="container">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <textarea id="xmlInput" name="xmlInput" rows="18" cols="28"><?php echo isset($xmlData) ? htmlspecialchars($xmlData, ENT_QUOTES, 'UTF-8') : ''; ?></textarea><br><br>
+            <input id="convertButton" type="submit" value="Convert!">
+        </form>
 
-    <form method="post">
-        <label for="xmlInput">Input XML:</label>
-        <textarea name="xmlInput" id="xmlInput" rows="8" cols="40"><?php echo htmlentities($xmlString); ?></textarea>
-
-        <br>
-
-        <input type="submit" value="Convert">
-
-        <br>
-
-        <label for="jsonOutput">Output JSON:</label>
-        <textarea id="jsonOutput" rows="8" cols="40" readonly><?php echo htmlentities($json); ?></textarea>
-    </form>
-
-    <script >
-        // Clear the JSON output area when XML input area is changed
-        document.getElementById('xmlInput').addEventListener('input', function () {
-            document.getElementById('jsonOutput').value = '';
-        });
-    </script>
+        <div id="jsonOutput">
+        <?php if (isset($jsonOutput)): ?>
+            <pre><textarea rows="18" cols="28"><?php echo htmlspecialchars($jsonOutput, ENT_QUOTES, 'UTF-8'); ?></textarea></pre>
+        <?php endif; ?>
+        </div>
+    </div>
 </body>
-
 </html>
