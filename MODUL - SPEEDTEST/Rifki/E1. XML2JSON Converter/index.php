@@ -8,9 +8,9 @@
         textarea{
             width : 360px;
         }
-        form {
-            display:flex;
-            gap: 15px;
+        .textarea {
+            display: flex;
+            gap: 15px
         }
         button {
             margin-top: 10px;
@@ -22,7 +22,8 @@
         <p>Enter XML content:</p>
     <form action="" method="post">
         <!-- <label for="xmlContent">Enter XML content:</label><br> -->
-        <textarea class="inputXML" name="xmlContent" id="xmlContent" rows="8" cols="80"></textarea><br>
+        <div class="textarea">
+            <textarea class="inputXML" name="xmlContent" id="xmlContent" rows="8" cols="80"></textarea><br>
         
         <?php
         // Function to convert XML to JSON
@@ -43,10 +44,14 @@
 
             // Output JSON result
             echo '<textarea class="hasilJSON" rows="10" cols="80" readonly>' . htmlspecialchars($jsonResult) . '</textarea>';
+            
         }
+
         ?>
+        </div>
         
+         <button type="submit">Convert</button>   
     </form>
-    <button type="submit">Convert</button>
+
 </body>
 </html>
