@@ -3,153 +3,147 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Message Analytics</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
+        margin: 20px;
       }
 
-      #analyticsContainer {
-        margin-top: 20px;
-        text-align: left;
+      #chat-analyzer {
+        max-width: 600px;
+        margin: 0 auto;
       }
 
-      #messageList {
-        list-style-type: none;
+      h2,
+      h3 {
+        color: #333;
+      }
+
+      #top-words-list {
+        list-style: none;
         padding: 0;
-        margin: 0;
       }
 
-      .messageItem {
-        margin-bottom: 10px;
+      #top-words-list li {
+        margin-bottom: 8px;
       }
     </style>
+    <title>Chat Analyzer</title>
   </head>
   <body>
-    <input type="file" id="fileInput" accept=".json" onchange="handleFile()" />
-    <div id="analyticsContainer" style="display: none">
-      <h2>Message Analytics</h2>
-      <div id="topWords"></div>
-      <p>Total messages sent: <span id="totalSent"></span></p>
-      <p>Total messages received: <span id="totalReceived"></span></p>
-      <p>Average character length sent: <span id="avgCharSent"></span></p>
-      <p>
-        Average character length received: <span id="avgCharReceived"></span>
-      </p>
-      <h3>Top 5 Sent Words</h3>
-      <ul id="topWordsList"></ul>
-      <h3>Message List</h3>
-      <ul id="messageList"></ul>
+    <div id="chat-analyzer">
+      <h2>Chat Analyzer</h2>
+
+      <!-- Input file untuk memilih file JSON -->
+      <input
+        type="file"
+        id="json-file-input"
+        accept=".json"
+        onchange="handleFileChange(event)"
+      />
+
+      <div id="analysis-results">
+        <h3>Top 5 Sent Words</h3>
+        <ul id="top-words-list"></ul>
+
+        <p>Total Messages Sent: <span id="total-messages-sent"></span></p>
+        <p>
+          Total Messages Received: <span id="total-messages-received"></span>
+        </p>
+        <p>
+          Average Character Length Sent: <span id="average-length-sent"></span>
+        </p>
+        <p>
+          Average Character Length Received:
+          <span id="average-length-received"></span>
+        </p>
+      </div>
     </div>
 
     <script>
-      function handleFile() {
-        const fileInput = document.getElementById("fileInput");
-        const analyticsContainer =
-          document.getElementById("analyticsContainer");
-        const topWordsContainer = document.getElementById("topWords");
-        const totalSentContainer = document.getElementById("totalSent");
-        const totalReceivedContainer = document.getElementById("totalReceived");
-        const avgCharSentContainer = document.getElementById("avgCharSent");
-        const avgCharReceivedContainer =
-          document.getElementById("avgCharReceived");
-        const topWordsListContainer = document.getElementById("topWordsList");
-        const messageListContainer = document.getElementById("messageList");
-
+      function handleFileChange(event) {
+        const fileInput = event.target;
         const file = fileInput.files[0];
+
         if (file) {
           const reader = new FileReader();
+
           reader.onload = function (e) {
-            const data = JSON.parse(e.target.result);
+            const content = e.target.result;
+            const chatData = JSON.parse(content);
 
-            // Perform analytics
-            const sentMessages = data.filter((msg) => msg.direction === "sent");
-            const receivedMessages = data.filter(
-              (msg) => msg.direction === "received"
-            );
-            const allMessages = data.length;
-            const totalSent = sentMessages.length;
-            const totalReceived = receivedMessages.length;
-            const avgCharSent = calculateAverageCharacterLength(sentMessages);
-            const avgCharReceived =
-              calculateAverageCharacterLength(receivedMessages);
-            const topWordsData = getTopWords(sentMessages);
-
-            // Display analytics
-            topWordsContainer.textContent = `Top 5 Sent Words: ${topWordsData.words.join(
-              ", "
-            )}`;
-            totalSentContainer.textContent = totalSent;
-            totalReceivedContainer.textContent = totalReceived;
-            avgCharSentContainer.textContent = avgCharSent.toFixed(2);
-            avgCharReceivedContainer.textContent = avgCharReceived.toFixed(2);
-
-            // Display top 5 sent words with counts
-            displayTopWords(topWordsData, topWordsListContainer);
-
-            // Show analytics container
-            analyticsContainer.style.display = "block";
-
-            // Display message list
-            displayMessageList(sentMessages, messageListContainer);
+            // Call the analyzeChatData function with the loaded chatData
+            analyzeChatData(chatData);
           };
 
           reader.readAsText(file);
+        } else {
+          alert("Please select a valid JSON file.");
         }
       }
 
-      function calculateAverageCharacterLength(messages) {
-        const totalCharacters = messages.reduce(
-          (sum, msg) => sum + msg.content.length,
-          0
+      function analyzeChatData(data) {
+        const messagesSent = data.chat_history.filter(
+          (message) => message.sender === "user"
         );
-        return totalCharacters / messages.length;
+        const messagesReceived = data.chat_history.filter(
+          (message) => message.sender === "bot"
+        );
+
+        // Extracting words from messages
+        const allWordsSent = messagesSent.flatMap((message) =>
+          message.message.split(/\s+/)
+        );
+
+        // Counting word occurrences
+        const wordCountSent = countWordOccurrences(allWordsSent);
+
+        // Sorting and getting the top 5 words
+        const topWordsSent = getTopWords(wordCountSent);
+
+        // Calculating averages
+        const averageLengthSent = calculateAverageLength(messagesSent);
+
+        // Displaying results
+        displayTopWords(topWordsSent, "top-words-list");
+        document.getElementById("total-messages-sent").textContent =
+          messagesSent.length;
+        document.getElementById("total-messages-received").textContent =
+          messagesReceived.length;
+        document.getElementById("average-length-sent").textContent =
+          averageLengthSent.toFixed(2);
+        document.getElementById("average-length-received").textContent =
+          calculateAverageLength(messagesReceived).toFixed(2);
       }
 
-      function getTopWords(messages) {
-        const wordsMap = new Map();
+      function countWordOccurrences(words) {
+        return words.reduce((acc, word) => {
+          acc[word] = (acc[word] || 0) + 1;
+          return acc;
+        }, {});
+      }
 
-        messages.forEach((msg) => {
-          const words = msg.content.split(/\s+/);
-          words.forEach((word) => {
-            const lowercaseWord = word.toLowerCase();
-            wordsMap.set(lowercaseWord, (wordsMap.get(lowercaseWord) || 0) + 1);
-          });
-        });
-
-        const sortedWords = Array.from(wordsMap.entries()).sort(
+      function getTopWords(wordCount) {
+        const sortedWords = Object.entries(wordCount).sort(
           (a, b) => b[1] - a[1]
         );
-        const topWords = sortedWords.slice(0, 5).map((item) => item[0]);
-        const topWordsWithCounts = topWords.map(
-          (word) => `${word} (${wordsMap.get(word)})`
+        return sortedWords.slice(0, 5);
+      }
+
+      function calculateAverageLength(messages) {
+        const totalLength = messages.reduce(
+          (acc, message) => acc + message.message.length,
+          0
         );
-
-        return { words: topWordsWithCounts };
+        return messages.length > 0 ? totalLength / messages.length : 0;
       }
 
-      function displayTopWords(topWordsData, container) {
-        container.innerHTML = "";
-        topWordsData.words.forEach((word) => {
+      function displayTopWords(topWords, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ""; // Clear previous results
+        topWords.forEach(([word, count]) => {
           const listItem = document.createElement("li");
-          listItem.className = "messageItem";
-          listItem.textContent = word;
-          container.appendChild(listItem);
-        });
-      }
-
-      function displayMessageList(messages, container) {
-        container.innerHTML = "";
-        messages.forEach((msg) => {
-          const listItem = document.createElement("li");
-          listItem.className = "messageItem";
-          listItem.textContent = `[${msg.direction}] ${msg.content}`;
+          listItem.textContent = `${word}: ${count} times`;
           container.appendChild(listItem);
         });
       }
