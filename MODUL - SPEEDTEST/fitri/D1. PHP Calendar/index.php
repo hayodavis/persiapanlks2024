@@ -1,140 +1,156 @@
 <?php
-$currentMonth = date('n');
-$currentYear = date('Y');
-$currentDay = date('j');
+    // Get the current date or a specific date
+    $currentDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 
-if (isset($_GET['prev'])) {
-  $currentMonth = ($currentMonth == 1) ? 12 : $currentMonth - 1;
-  $currentYear = ($currentMonth == 12) ? $currentYear - 1 : $currentYear;
-}
+    // Convert the date to a DateTime object
+    $dateTime = new DateTime($currentDate);
 
-if (isset($_GET['next'])) {
-  $currentMonth = ($currentMonth == 12) ? 1 : $currentMonth + 1;
-  $currentYear = ($currentMonth == 1) ? $currentYear + 1 : $currentYear;
-}
+    // Get the current month, year, and day
+    $currentMonth = $dateTime->format('m');
+    $currentYear = $dateTime->format('Y');
+    $today = date('d');
 
-// Array of month names in Bahasa Indonesia
-$monthNames = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-];
+    // Calculate the previous and next month
+    $prevMonth = $dateTime->modify('-1 month')->format('Y-m-d');
+    $nextMonth = $dateTime->modify('+2 months')->format('Y-m-d');
+    $dateTime->modify('-1 month'); // Reset to the original date
+
+    // Get the first day of the month and the total number of days
+    $firstDay = $dateTime->format('N');
+    $lastDay = $dateTime->format('t');
+
+    // Highlighted month (for current month)
+    $highlightedMonth = $dateTime->format('m');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 50px;
-    }
+    <style>
+               body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: whitesmoke;
+}
 
-    #calendar {
-      border-collapse: collapse;
-      border-top: 5px solid red ;
-      margin-top: 20px;
-      width: 600px;
-      height: 400px;
-    }
+#calendar {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-top: 3px solid #B80000;
+    border-radius: 5px;
+}
 
-    #calendar th,
-    #calendar td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
+h2 {
+    color: #333;
+}
 
-    #calendar th {
-      background-color: #f2f2f2;
-    }
+#header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
 
-    .highlight-today {
-      background-color: red;
-      color: white;
-      font-weight: bold;
-    }
+a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.5em;
+}
 
-    
-    .bttnpnah1 {
-      padding: 10px;
-      font-size: 30px;
-      top: 60px;
-      left: 700px;
-      font-weight: bold;
-      position: absolute;
-      color: black;
-    }
-    .bttnpnah2 {
-      padding: 10px;
-      font-size: 30px;
-      top: 60px;
-      right: 700px;
-      font-weight: bold;
-      position: absolute;
-      color: black;
+table {
+    width: 100%;
+    height: 300px ;
+    border-collapse: collapse;
+}
 
-    }
-  </style>
+thead tr {
+    color: #B80000;
+}
+
+#bttnleft {
+    transform: rotate(270deg);
+}
+#bttnright {
+    transform: rotate(90deg);
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: white;
+    border: 0px;
+}
+
+td {
+    cursor: pointer;
+}
+
+.today {
+    background-color: #B80000;
+    color: white;
+    font-weight: bold;
+}
+    </style>
 </head>
-
 <body>
+    <div id="calendar">
+        <h2><?php echo $dateTime->format('F'); ?></h2>
+        
+        <div id="header">
+            <a id="bttnleft" href="?date=<?php echo $prevMonth; ?>">&#128314;</a>
+            <span><?php echo $dateTime->format('Y'); ?></span>
+            <a id="bttnright" href="?date=<?php echo $nextMonth; ?>">&#128314;</a>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <?php
+                        // Fill in the first row with empty cells for previous month
+                        for ($i = 1; $i < $firstDay; $i++) {
+                            echo '<td></td>';
+                        }
 
-  <h2><?php echo $monthNames[$currentMonth - 1] . ' ' . $currentYear; ?></h2>
+                        // Fill in the days of the current month
+                        for ($day = 1; $day <= $lastDay; $day++) {
+                            $class = ($day - $firstDay + 2 == $today && $currentMonth == date('n') && $currentYear == date('Y')) ? 'today' : '';
+                            echo "<td class='$class'>$day</td>";
+                            
 
-  <table id="calendar">
-    <thead>
-      <tr>
-        <th>Minggu</th>
-        <th>Senin</th>
-        <th>Selasa</th>
-        <th>Rabu</th>
-        <th>Kamis</th>
-        <th>Jumat</th>
-        <th>Sabtu</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      $firstDayOfMonth = mktime(0, 0, 0, $currentMonth, 1, $currentYear);
-      $daysInMonth = date('t', $firstDayOfMonth);
-      $dayOfWeek = date('w', $firstDayOfMonth);
+                            // Start a new row for the next week
+                            if (($firstDay + $day - 1) % 7 == 0 && $day < $lastDay) {
+                                echo '</tr><tr>';
+                            }
+                        }
 
-      $currentDayOfMonth = 2;
-
-      for ($i = 0; $i < $dayOfWeek; $i++) {
-        echo '<td></td>';
-      }
-
-      while ($currentDayOfMonth <= $daysInMonth) {
-        echo '<td' . (($currentDayOfMonth == $currentDay) ? ' class="highlight-today"' : '') . '>' . $currentDayOfMonth . '</td>';
-
-        if (++$dayOfWeek == 7) {
-          echo '</tr><tr>';
-          $dayOfWeek = 0;
-        }
-
-        $currentDayOfMonth++;
-      }
-
-      while ($dayOfWeek > 0 && $dayOfWeek < 7) {
-        echo '<td></td>';
-        $dayOfWeek++;
-      }
-      ?>
-    </tbody>
-  </table>
-
-  <div class="btn-container">
-    <a href="?prev" class="bttnpnah1"> < </a>
-    <a href="?next" class="bttnpnah2"> > </a>
-  </div>
-
+                        // Fill in the remaining cells with empty cells for next month
+                        $remainingCells = 7 - (($firstDay + $lastDay - 1) % 7);
+                        for ($i = 0; $i < $remainingCells; $i++) {
+                            echo '<td></td>';
+                        }
+                    ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
