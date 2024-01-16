@@ -18,6 +18,9 @@
     // Get the first day of the month and the total number of days
     $firstDay = $dateTime->format('N');
     $lastDay = $dateTime->format('t');
+
+    // Highlighted month (for current month)
+    $highlightedMonth = $dateTime->format('m');
 ?>
 
 <!DOCTYPE html>
@@ -131,9 +134,9 @@ td {
 
                         // Fill in the days of the current month
                         for ($day = 1; $day <= $lastDay; $day++) {
-                            $class = ($day == $today) ? 'today' : '';
+                            $class = ($day - $firstDay + 2 == $today && $currentMonth == date('n') && $currentYear == date('Y')) ? 'today' : '';
                             echo "<td class='$class'>$day</td>";
-
+                            
                             // Start a new row for the next week
                             if (($firstDay + $day - 1) % 7 == 0 && $day < $lastDay) {
                                 echo '</tr><tr>';
