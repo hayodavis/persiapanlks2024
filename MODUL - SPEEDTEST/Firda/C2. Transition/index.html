@@ -3,105 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transition</title>
+    <title>Image Splitter</title>
     <style>
-      #imageGrid {
-        display: grid;
-        gap: 5px;
-        padding-top: 15px;
-      }
-
-      #originalImage{
-        padding-top: 15px;
-      }
-
-      #imageContainer {
+      body {
         display: flex;
-        align-items: flex-start;
-      }
-      
-      #originalImage,
-      #imageGrid {
-        width: 48%; 
-        margin: 5px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
       }
 
-      .grid-item {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      #input-container {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      input {
+        margin-right: 10px;
+        padding: 5px;
+      }
+
+      button {
+        padding: 7px 15px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #image-container {
+        display: grid;
+        grid-gap: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-left: 15px;
+      }
+
+      .card {
+        cursor: pointer;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .container{
+        display: flex;
       }
     </style>
   </head>
   <body>
-    <label for="rows">Y:</label>
-    <input type="number" id="rows" min="1" />
-    <label for="columns">X:</label>
-    <input type="number" id="columns" min="1" />
-    <button onclick="generateImageGrid()">Split Image</button>
-
-    <div id="imageContainer">
-      <img id="originalImage" src="bear.jpg" />
-      <div id="imageGrid"></div>
+    <div id="input-container">
+      <label for="inputX">X:</label>
+      <input
+        type="number"
+        id="inputX"
+        value="5"
+      />
+      <label for="inputY">Y:</label>
+      <input
+        type="number"
+        id="inputY"
+        value="3"
+      />
+      <button onclick="splitImage()">Split Image</button>
+    </div>
+    <div class="container">
+      <img src="bears.jpg" alt="before">
+      <div id="image-container"></div>
     </div>
 
     <script>
-      function generateImageGrid() {
+      function splitImage() {
+        const container = document.getElementById("image-container");
+        const inputX = document.getElementById("inputX").value;
+        const inputY = document.getElementById("inputY").value;
 
-        var rows = document.getElementById("rows").value;
-        var columns = document.getElementById("columns").value;
+        // Clear existing cards
+        container.innerHTML = "";
 
-        var image = new Image();
-        image.src = "bear.jpg";
-        image.onload = function () {
+        // Load image
+        const img = new Image();
+        img.src = "bears.jpg"; 
+        img.onload = function () {
+          container.style.gridTemplateColumns = `repeat(${inputX}, 1fr)`;
+          container.style.gridTemplateRows = `repeat(${inputY}, 1fr)`;
 
-          var imageGrid = splitImage(image, rows, columns);
+          const cardWidth = img.width / inputX;
+          const cardHeight = img.height / inputY;
 
-          var gridContainer = document.getElementById("imageGrid");
-          gridContainer.innerHTML = ""; 
-          gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-          gridContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+          // Create cards
+          for (let i = 0; i < inputY; i++) {
+            for (let j = 0; j < inputX; j++) {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.style.width = cardWidth + "px";
+              card.style.height = cardHeight + "px";
+              card.style.backgroundImage = `url(${img.src})`;
+              card.style.backgroundSize = `${img.width}px ${img.height}px`;
+              card.style.backgroundPosition = `-${j * cardWidth}px -${
+                i * cardHeight
+              }px`;
 
-          imageGrid.forEach(function (imgPart) {
-            imgPart.classList.add("grid-item");
-            gridContainer.appendChild(imgPart);
-          });
-        };
-      }
+              // Add click event to remove card with animation
+              card.onclick = function () {
+                card.style.opacity = 0;
+                setTimeout(() => {
+                  container.removeChild(card);
+                }, 500);
+              };
 
-      function splitImage(image, rows, columns) {
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-
-        var imgWidth = image.width / columns;
-        var imgHeight = image.height / rows;
-
-        var imageGrid = [];
-
-        for (var row = 0; row < rows; row++) {
-          for (var col = 0; col < columns; col++) {
-            canvas.width = imgWidth;
-            canvas.height = imgHeight;
-
-            context.drawImage(
-              image,
-              col * imgWidth,
-              row * imgHeight,
-              imgWidth,
-              imgHeight,
-              0,
-              0,
-              imgWidth,
-              imgHeight
-            );
-
-            var imgPart = new Image();
-            imgPart.src = canvas.toDataURL("image/png"); 
-            imageGrid.push(imgPart);
+              container.appendChild(card);
+            }
           }
-        }
-
-        return imageGrid;
+        };
       }
     </script>
   </body>
