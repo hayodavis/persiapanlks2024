@@ -1,19 +1,32 @@
 <?php
-$currentMonth = date('n');
-$currentYear = date('Y');
+session_start();
+
+// Set initial values if not set
+if (!isset($_SESSION['currentMonth'])) {
+    $_SESSION['currentMonth'] = date('n');
+}
+
+if (!isset($_SESSION['currentYear'])) {
+    $_SESSION['currentYear'] = date('Y');
+}
+
+$currentMonth = $_SESSION['currentMonth'];
+$currentYear = $_SESSION['currentYear'];
 $currentDay = date('j');
 
 if (isset($_GET['prev'])) {
-  $currentMonth = ($currentMonth == 1) ? 12 : $currentMonth - 1;
-  $currentYear = ($currentMonth == 12) ? $currentYear - 1 : $currentYear;
+    $currentMonth = ($currentMonth == 1) ? 12 : $currentMonth - 1;
+    $currentYear = ($currentMonth == 12) ? $currentYear - 1 : $currentYear;
 }
 
 if (isset($_GET['next'])) {
-  $currentMonth = ($currentMonth == 12) ? 1 : $currentMonth + 1;
-  $currentYear = ($currentMonth == 1) ? $currentYear + 1 : $currentYear;
+    $currentMonth = ($currentMonth == 12) ? 1 : $currentMonth + 1;
+    $currentYear = ($currentMonth == 1) ? $currentYear + 1 : $currentYear;
 }
 
-
+// Update session variables
+$_SESSION['currentMonth'] = $currentMonth;
+$_SESSION['currentYear'] = $currentYear;
 ?>
 
 <!DOCTYPE html>
