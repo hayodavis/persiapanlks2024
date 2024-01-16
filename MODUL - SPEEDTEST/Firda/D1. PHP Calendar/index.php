@@ -13,6 +13,7 @@ if (isset($_GET['next'])) {
   $currentYear = ($currentMonth == 1) ? $currentYear + 1 : $currentYear;
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -86,12 +87,10 @@ if (isset($_GET['next'])) {
       color: white;
       font-weight: bold;
     }
-
   </style>
 </head>
 
 <body>
-
   <div class="calendar-container">
 
     <div class="top-row">
@@ -100,10 +99,10 @@ if (isset($_GET['next'])) {
         <?php echo date('F', mktime(0, 0, 0, $currentMonth, 1, $currentYear)); ?>
         <br>
         <div class="year">
-        <?php echo date('Y', mktime(0, 0, 0, $currentMonth, 1, $currentYear)); ?>
+          <?php echo date('Y', mktime(0, 0, 0, $currentMonth, 1, $currentYear)); ?>
+        </div>
       </div>
-      </div>
-      
+
       <a href="?next" class="arrow-btn"><img src="right.png" alt="next"></a>
     </div>
 
@@ -132,7 +131,7 @@ if (isset($_GET['next'])) {
         }
 
         while ($currentDayOfMonth <= $daysInMonth) {
-          echo '<td' . (($currentDayOfMonth == $currentDay) ? ' class="highlight-today"' : '') . '>' . $currentDayOfMonth . '</td>';
+          echo '<td' . (($currentMonth == date('n') && $currentDayOfMonth == $currentDay) ? ' class="highlight-today"' : '') . '>' . $currentDayOfMonth . '</td>';
 
           if (++$dayOfWeek == 7) {
             echo '</tr><tr>';
@@ -150,7 +149,6 @@ if (isset($_GET['next'])) {
       </tbody>
     </table>
   </div>
-
 </body>
 
 </html>
