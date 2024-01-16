@@ -18,16 +18,16 @@
     // Get the first day of the month and the total number of days
     $firstDay = $dateTime->format('N');
     $lastDay = $dateTime->format('t');
+
+    // Highlighted month (for current month)
+    $highlightedMonth = $dateTime->format('m');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar</title>
     <style>
-        body {
+               body {
     font-family: 'Times New Roman', Times, serif;
     margin: 0;
     padding: 0;
@@ -131,8 +131,9 @@ td {
 
                         // Fill in the days of the current month
                         for ($day = 1; $day <= $lastDay; $day++) {
-                            $class = ($day == $today) ? 'today' : '';
+                            $class = ($day - $firstDay + 2 == $today && $currentMonth == date('n') && $currentYear == date('Y')) ? 'today' : '';
                             echo "<td class='$class'>$day</td>";
+                            
 
                             // Start a new row for the next week
                             if (($firstDay + $day - 1) % 7 == 0 && $day < $lastDay) {
@@ -141,7 +142,7 @@ td {
                         }
 
                         // Fill in the remaining cells with empty cells for next month
-                        $remainingCells = 1 - (($firstDay + $lastDay - 1) % 1);
+                        $remainingCells = 7 - (($firstDay + $lastDay - 1) % 7);
                         for ($i = 0; $i < $remainingCells; $i++) {
                             echo '<td></td>';
                         }
