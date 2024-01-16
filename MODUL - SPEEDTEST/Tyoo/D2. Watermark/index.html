@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermark App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input {
+            margin: 5px 0 20px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output-container {
+            position: relative;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+
+        #output-image {
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        #watermark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.5;
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <form id="upload-form">
+        <label for="image-input">Choose an image:</label>
+        <input type="file" id="image-input" accept="image/*">
+        <br>
+        <label for="logo-input">Choose a logo:</label>
+        <input type="file" id="logo-input" accept="image/png">
+        <br>
+        <button type="button" onclick="addWatermark()">Add Watermark</button>
+    </form>
+
+    <div id="output-container">
+        <img id="output-image" alt="Output Image">
+        <img id="watermark" alt="Watermark">
+    </div>
+
+    <script>
+        function addWatermark() {
+            const imageInput = document.getElementById('image-input');
+            const logoInput = document.getElementById('logo-input');
+            const outputImage = document.getElementById('output-image');
+            const watermark = document.getElementById('watermark');
+
+            if (imageInput.files.length > 0 && logoInput.files.length > 0) {
+                const imageFile = imageInput.files[0];
+                const logoFile = logoInput.files[0];
+
+                const imageUrl = URL.createObjectURL(imageFile);
+                const logoUrl = URL.createObjectURL(logoFile);
+
+                outputImage.src = imageUrl;
+                watermark.src = logoUrl;
+
+                // Show the watermark
+                watermark.style.display = 'block';
+            } else {
+                alert('Please select both an image and a logo.');
+            }
+        }
+    </script>
+</body>
+</html>
