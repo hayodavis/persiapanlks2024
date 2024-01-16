@@ -6,7 +6,7 @@ canvas.height = 600;
 // global variables
 const cellSize = 100;
 const cellGap = 3;
-let numberOfResources = 99999999;
+let numberOfResources = 340;
 let enemiesInterval = 600;
 let frame = 0;
 let gameOver = false;
@@ -76,8 +76,8 @@ class Projectile {
         this.y = y;
         this.width = 10;
         this.height = 10;
-        this.power = 50;
-        this.speed = 10;
+        this.power = 20;
+        this.speed = 8;
     }
     update(){
         this.x += this.speed;
